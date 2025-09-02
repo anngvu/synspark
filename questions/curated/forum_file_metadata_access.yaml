@@ -7,30 +7,32 @@ meta:
   key_concepts: ["file metadata", "API properties", "download optimization"]
   updated_approach: true
   update_approach_details: "At time of forum discussion, file views didn't support contentSize. This has since been implemented, making file views the best current approach."
-
+  multiple_correct: false
 context: |
   **File Metadata Access in Synapse**
-  
+
   When working with large datasets in Synapse, researchers often need to check file sizes before downloading to ensure they have adequate storage space. Understanding how to access file metadata programmatically is crucial for efficient data management.
-
 question: "Kara is a research scientist who needs to check the sizes of hundreds to thousands of files in a Synapse project before downloading them to ensure she has enough local disk space. She's using the R client (synapser). What should be communicated as the most helpful approach to get file sizes without downloading the files first?"
-
 answers:
   - text: "Use synGet() with downloadFile=TRUE for each file id, then extract the size from the downloaded object."
     correct: false
     message: "This would actually download all files first, defeating the purpose of checking sizes beforehand and consuming unnecessary bandwidth and storage."
+    points: 0
   - text: "Use synGet() with downloadFile=FALSE for each file id, then access the fileSize property on the object"
     correct: false
     message: "While this approach works for individual files, it requires calling synGet() for each file separately, which is inefficient for hundreds of files."
+    points: 0
   - text: "Create a file view scoped to the project that contains the contentSize column and query the contentSize column to get the summarized file sizes at once"
     correct: true
     message: "Correct! This is now the most efficient approach. File views can include contentSize as a column, allowing you to query all file sizes in a single operation. Note: This capability wasn't available when originally discussed in 2018."
+    points: 1
   - text: "Use the synGet() with downloadFile=FALSE on the project id, then access the contentSize property on the object."
     correct: false
     message: "Sounds nice, but this was a trick answer -- it won't actually work."
+    points: 0
   - text: "Offer to look up total sizes for the project in Snowflake for Kara and confirm via email."
     correct: false
     message: "While you *can* use Snowflake to query for file sizes (potentially in more complicated scenarios), in this instance Kara has access to a working self-serve method via fileviews, so it is best to point out the self-serve solution."
-
+    points: 0
 allow_retry: true
 random_answer_order: false

@@ -5,27 +5,28 @@ meta:
   source_date: "2021-04-26"
   source_timestamps: ["2021-04-26 19:19:52", "2021-04-26 19:30:11", "2021-04-26 19:32:16"]
   key_concepts: ["wiki permissions", "javascript restrictions", "security boundaries", "form services", "external hosting"]
-
+  multiple_correct: false
 context: |
   **Understanding Synapse Wiki HTML/JavaScript Permissions**
-  
+
   Synapse wikis support markdown and basic HTML, but JavaScript execution is restricted for security reasons. Only Sage Bionetworks team members have special permissions to embed custom JavaScript widgets. Regular users cannot execute custom JavaScript or embed interactive widgets directly in wikis.
-
 question: "A researcher wants to embed a custom JavaScript-based data visualization dashboard widget in their Synapse project wiki to display interactive D3.js charts and graphs from their study data. The widget needs real-time updates, user interactions like filtering, and direct connections to Synapse tables. What are their viable options given Synapse's security restrictions?"
-
 answers:
   - text: "Upload the dashboard files and embed them directly using HTML widgets in the wiki"
     correct: false
     message: "Regular users cannot embed HTML with JavaScript in Synapse wikis. This capability is restricted to Sage Bionetworks team members for security reasons."
+    points: 0
   - text: "Deploy the dashboard externally and link to it from the wiki, or request Sage team assistance for embedding"
     correct: true
     message: "Correct! This respects security restrictions while providing functionality. External hosting maintains full interactivity, and Sage team members can help with embedded widgets if justified."
+    points: 1
   - text: "Use Synapse's built-in charting features to create static visualizations in the wiki"
     correct: false
     message: "While Synapse has some basic visualization capabilities, they don't provide the real-time updates, filtering, and interactive features the researcher specifically needs."
+    points: 0
   - text: "Convert the dashboard to static images that update periodically"
     correct: false
     message: "This removes all user interactivity and real-time capabilities that the researcher specifically requires for their data visualization dashboard."
-
+    points: 0
 allow_retry: true
 random_answer_order: true

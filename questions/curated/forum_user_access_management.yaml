@@ -5,27 +5,28 @@ meta:
   source_date: "2020-05-14"
   source_timestamps: ["2020-05-14 10:13:16", "2020-05-14 13:57:28"]
   key_concepts: ["user management", "team invitations", "access permissions", "email-based invites"]
-
+  multiple_correct: false
 context: |
   **Managing User Access When Synapse Usernames Are Unknown**
-  
+
   Data coordinators often need to grant access to external collaborators who may have Synapse accounts but whose usernames are not readily available. Understanding alternative methods for managing access permissions is crucial for efficient collaboration workflows.
-
 question: "Patricia, a project coordinator, needs to grant upload permissions to an external collaborator. She only has their institutional email address, and despite asking multiple times, the collaborator doesn't understand what a 'Synapse username' means. What's the most efficient approach to grant them access?"
-
 answers:
   - text: "Create a Synapse team, invite the user by email address, and grant team-based permissions"
     correct: true
     message: "Correct! Team invitations work with email addresses and will either invite existing users or prompt account creation. This approach grants access without needing to know the exact username."
+    points: 1
   - text: "Ask the collaborator to create a new Synapse account with a username you specify"
     correct: false
     message: "This creates unnecessary complexity and confusion. Synapse already provides mechanisms to work with existing accounts using email addresses."
+    points: 0
   - text: "Request Synapse support to look up the username using the email address"
     correct: false
     message: "This involves privacy considerations and support overhead. The team-based invitation system provides a direct solution without requiring support intervention."
+    points: 0
   - text: "Wait until the collaborator understands the username concept before proceeding"
     correct: false
     message: "This delays the project unnecessarily. Synapse provides email-based invitation mechanisms specifically to avoid this confusion."
-
+    points: 0
 allow_retry: true
 random_answer_order: true

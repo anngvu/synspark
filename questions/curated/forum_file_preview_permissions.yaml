@@ -5,27 +5,28 @@ meta:
   source_date: "2017-11-15"
   source_timestamps: ["2017-11-15 12:17:07", "2017-11-15 12:20:18"]
   key_concepts: ["file previews", "access permissions", "public files", "authentication requirements"]
-
+  multiple_correct: false
 context: |
   **File Preview Access and Authentication in Synapse**
-  
+
   Synapse provides preview capabilities for various file types to help users quickly assess content without downloading. However, the relationship between file visibility, access permissions, and preview availability can sometimes be confusing to users.
-
 question: "Jordan, a graduate student, finds a public PDF file in Synapse but cannot see the preview when browsing without logging in. The file appears to be publicly accessible based on the project settings. How can he understand why the preview isn't available?"
-
 answers:
   - text: "The PDF file is corrupted and cannot generate a preview"
     correct: false
     message: "File corruption would typically show an error message rather than hiding the preview entirely. The issue is related to authentication, not file integrity."
+    points: 0
   - text: "File previews require authentication even for public files, as a security measure"
     correct: true
     message: "Correct! Synapse requires users to be logged in to access file previews and downloads, even for files in public projects, as part of its access control architecture."
+    points: 1
   - text: "PDF previews are only available for files smaller than a certain size limit"
     correct: false
     message: "While there may be size considerations for performance, the scenario describes a general authentication issue, not a file-size limitation."
+    points: 0
   - text: "The project owner has disabled previews for this specific file type"
     correct: false
     message: "Preview availability is generally controlled by Synapse's system capabilities and authentication requirements, not by individual project settings for specific file types."
-
+    points: 0
 allow_retry: true
 random_answer_order: true

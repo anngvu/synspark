@@ -5,27 +5,28 @@ meta:
   source_date: "2018-03-08"
   source_timestamps: ["2018-03-08 10:42:25", "2018-03-08 11:00:07"]
   key_concepts: ["platform positioning", "branding confusion", "feature differentiation", "user communication"]
-
+  multiple_correct: false
 context: |
   **Understanding Synapse as a Comprehensive Research Platform**
-  
+
   Synapse is often misunderstood as just a data repository, when it actually provides a comprehensive research collaboration platform. This confusion can limit how researchers utilize its full capabilities for project management, analysis, and collaboration.
-
 question: "Taylor, a project manager, notices that external collaborators consistently refer to 'uploading data to Sage' rather than 'using Synapse.' They seem to view it only as a data storage solution, missing features like wiki-embeddable charts, provenance tracking, and integration with collaborative analysis platforms. What's the best approach to address this misconception?"
-
 answers:
   - text: "Correct the terminology every time to ensure they use 'Synapse' instead of 'Sage'"
     correct: false
     message: "While terminology matters, focusing only on naming doesn't address the underlying misunderstanding about Synapse's comprehensive capabilities."
+    points: 0
   - text: "Showcase Synapse's features like wiki charts, markdown documentation, provenance graphs, and analysis platform integrations and tools during project meetings"
     correct: true
     message: "Correct! Actively demonstrating the platform's collaborative and analytical features helps users understand Synapse as a comprehensive research platform, not just storage."
+    points: 1
   - text: "Provide detailed technical documentation about all of Synapse's features to each new collaborator"
     correct: false
     message: "Documentation alone often gets overlooked. Active demonstration and practical examples are more effective for changing perceptions."
+    points: 0
   - text: "Focus on data management features since that's what users currently understand and value"
     correct: false
     message: "This reinforces the limited perception of Synapse as just a data repository, missing opportunities to leverage its full collaborative potential and diversify."
-
+    points: 0
 allow_retry: true
 random_answer_order: true

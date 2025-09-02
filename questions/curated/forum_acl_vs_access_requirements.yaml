@@ -6,6 +6,7 @@ meta:
   source_timestamps: ["2021-09-14 16:19:54", "2021-09-14 16:50:41"]
   key_concepts: ["access control lists", "access requirements", "permissions", "data governance"]
   updated_approach: false
+  multiple_correct: false
 
 context: |
   **Understanding ACLs vs Access Requirements in Synapse**
@@ -18,15 +19,19 @@ answers:
   - text: "Admin permissions should override all access restrictions - this is likely a system bug"
     correct: false
     message: "Admin permissions don't automatically bypass Access Requirements. ARs are a separate governance layer that applies even to users with admin ACL permissions."
+    points: 0
   - text: "Maya hasn't completed the Access Requirements approval process for the publicly released dataset"
     correct: true
     message: "Correct! Access Requirements operate independently from ACL permissions. Even with admin access, Maya must still fulfill the Access Requirements (like signing agreements, providing justification, etc.) that were applied when the dataset was released."
+    points: 1
   - text: "The files with Access Requirements are corrupted or have different storage permissions"
     correct: false
     message: "This isn't a storage or file integrity issue. Access Requirements are a governance mechanism that requires separate approval regardless of ACL permissions."
+    points: 0
   - text: "Maya's admin permissions expired and need to be renewed by the project owner"
     correct: false
     message: "If Maya's admin permissions had expired, she wouldn't be able to access any files in the project. The issue is specifically with Access Requirements, not ACL permissions."
+    points: 0
 
 allow_retry: true
 random_answer_order: true

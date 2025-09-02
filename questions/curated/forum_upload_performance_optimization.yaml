@@ -6,27 +6,28 @@ meta:
   source_timestamps: ["2024-03-19 13:14:29", "2024-03-19 17:19:31"]
   key_concepts: ["upload performance", "multipart upload", "transfer acceleration", "bandwidth optimization"]
   updated_approach: false
-
+  multiple_correct: false
 context: |
   **Upload Performance Optimization in Synapse**
-  
+
   Users with high-speed internet connections may experience unexpectedly slow upload speeds when using the Synapse web client. Understanding the factors that affect upload performance helps in choosing the right tools and configuration for large file transfers.
-
 question: "Sam, a researcher with a 2.5 Gbps connection, is experiencing upload speeds of less than 5 Mbps when using the Synapse web client to transfer large datasets. They want to optimize their upload performance. What factors most likely contribute to this performance gap and what's the best solution?"
-
 answers:
   - text: "Web client uploads are single-threaded and include client-side MD5 calculation overhead - use the Python client for better performance"
     correct: true
     message: "Correct! The web client uploads parts serially and calculates MD5 hashes client-side, which limits performance. The Python client uses optimized multipart uploads with better resource utilization."
+    points: 1
   - text: "Synapse servers are located in a different region causing network latency - switch to a closer geographical location"
     correct: false
     message: "While latency can affect performance, the primary bottleneck is in the client-side processing and upload methodology, not geographical distance to servers."
+    points: 0
   - text: "The user's ISP is throttling uploads to cloud services - contact the internet service provider"
     correct: false
     message: "ISP throttling would affect all cloud uploads equally. The issue is specifically with how the Synapse web client handles large file uploads compared to optimized clients."
+    points: 0
   - text: "Large files need to be compressed before uploading to reduce transfer time"
     correct: false
     message: "File compression wouldn't address the underlying performance issues with the web client's upload methodology and could actually slow down the process further."
-
+    points: 0
 allow_retry: true
 random_answer_order: true

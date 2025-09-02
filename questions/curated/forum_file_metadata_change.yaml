@@ -5,27 +5,28 @@ meta:
   source_date: "2019-06-25"
   source_timestamps: ["2019-06-25 11:05:34", "2019-06-25 12:01:13"]
   key_concepts: ["file metadata", "download filename", "client caching", "entity updates"]
-
+  multiple_correct: false
 context: |
   **Modifying File Metadata in Synapse**
-  
+
   Researchers often need to change how files appear when downloaded from Synapse, such as updating the "Download File As" name. Synapse provides utilities to modify file metadata without re-uploading files, but understanding client behavior is important.
-
 question: "Dr. Chen is a data scientist who used synapseutils.changeFileMetaData() to change the download filename of a Synapse file. The change appears correctly in the web interface, but when she downloads the file programmatically afterward, it still uses the old filename. What's the most likely cause of this issue?"
-
 answers:
   - text: "The metadata changes take time to propagate across Synapse servers"
     correct: false
     message: "Metadata changes are typically immediate in Synapse. The web interface showing the correct name indicates the change has propagated."
+    points: 0
   - text: "The Python client is using cached information based on the file's MD5 hash and previous download location"
     correct: true
     message: "Correct! The client uses MD5 and other metadata for caching. If the file was previously downloaded, the client may return the cached version with the old filename rather than re-downloading."
+    points: 1
   - text: "The synapseutils.changeFileMetaData() function only affects the web interface display"
     correct: false
     message: "The changeFileMetaData function creates a new file handle that should affect all clients, not just the web interface."
+    points: 0
   - text: "She needs to update the entity's etag manually to force the client to recognize the change"
     correct: false
     message: "The etag is managed automatically by Synapse. Manual etag modification is not possible or necessary."
-
+    points: 0
 allow_retry: true
 random_answer_order: true

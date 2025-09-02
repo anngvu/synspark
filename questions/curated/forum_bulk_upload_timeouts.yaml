@@ -5,27 +5,28 @@ meta:
   source_date: "2022-07-28"
   source_timestamps: ["2022-07-28 10:29:12", "2022-07-28 10:26:22"]
   key_concepts: ["bulk upload", "multipart upload", "timeout errors", "large files"]
-
+  multiple_correct: false
 context: |
   **Bulk Upload Strategies for Large Files in Synapse**
-  
+
   When uploading large datasets to Synapse, researchers often encounter timeout and performance issues. Understanding the available strategies for handling large file uploads is crucial for successful data transfers, especially from high-performance computing environments.
-
 question: "Maria, a bioinformatician and data contributor, needs to upload 2000 FASTQ files (20-45GB each) from a university cluster to Synapse. Her syncToSynapse bulk upload consistently times out after uploading about 100 files, with a '403 Forbidden - AccessDenied Request has expired' error. What's the most effective strategy to resolve this issue?"
-
 answers:
   - text: "Increase the timeout settings in the Synapse client configuration"
     correct: false
     message: "The '403 Forbidden - Request has expired' error suggests credential expiration rather than timeout settings. Increasing timeouts won't resolve authentication issues."
+    points: 0
   - text: "Break the manifest into smaller batches of 50-100 files per upload session"
     correct: true
     message: "Correct! The error indicates credential expiration during long-running uploads. Smaller batches reduce upload session duration, preventing credential expiration and allowing for better error recovery."
+    points: 1
   - text: "Switch to using single-threaded uploads instead of multipart uploads"
     correct: false
     message: "Single-threaded uploads would actually be slower for large files and wouldn't address the credential expiration issue causing the 403 error."
+    points: 0
   - text: "Convert all FASTQ files to compressed formats before uploading"
     correct: false
     message: "While compression can reduce upload time, it doesn't address the root cause of credential expiration during long bulk operations."
-
+    points: 0
 allow_retry: true
 random_answer_order: true

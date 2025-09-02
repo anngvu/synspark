@@ -6,30 +6,30 @@ meta:
   source_timestamps: ["2025-01-27 14:00:04", "2025-01-27 16:56:20"]
   key_concepts: ["email system integration", "service accounts", "email verification", "external application integration"]
   updated_approach: false
-
+  multiple_correct: false
 context: |
   **Email System Integration Requirements with Synapse**
-  
+
   When integrating external applications with Synapse's email system, there are specific requirements about sender authentication. Understanding these requirements is crucial for implementing verification emails and notifications that work with Synapse addresses.
-
 question: "Taylor, a software developer, is building a SAS application that needs to send verification emails to users who register with @synapse.org email addresses. The emails are being rejected with '554 message rejected because the target returned error 400 - not a recognized, registered Synapse address.' What's the proper solution to enable email delivery?"
-
 answers:
   - text: "Configure the SAS application to use SMTP authentication with Synapse servers"
     correct: false
     message: "SMTP authentication won't solve this issue. The problem is sender address recognition, not authentication protocol configuration."
+    points: 0
   - text: "Register the SAS service's sending email address as a Synapse account or add it as a secondary email to an existing account"
     correct: true
     message: "Correct! Synapse only accepts emails from addresses that are registered with the platform. The service email must be associated with a Synapse account to send emails successfully."
+    points: 1
   - text: "Switch to using webhooks instead of email for user verification"
     correct: false
     message: "While webhooks might work for some use cases, this doesn't solve the fundamental requirement of sending verification emails to @synapse.org addresses."
+    points: 0
   - text: "Use a different email service provider that has better deliverability to Synapse"
     correct: false
     message: "The issue isn't with the email service provider - it's Synapse's policy to only accept emails from registered addresses. Changing providers won't resolve this."
-
+    points: 0
 enhancement: |
   In the NF project, we use a service account registered with Synapse (nf-service@sagebase.org) to send emails.
-
 allow_retry: true
 random_answer_order: true

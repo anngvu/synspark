@@ -6,27 +6,28 @@ meta:
   source_timestamps: ["2020-04-23 13:54:26", "2020-04-23 14:01:02"]
   key_concepts: ["column models", "table schema", "data reuse", "immutable objects"]
   updated_approach: false
-
+  multiple_correct: false
 context: |
   **Column Model Reuse and Global Nature in Synapse**
-  
+
   Synapse Column Models are designed to be immutable and reusable across different tables and users. Understanding this global sharing mechanism is important for efficient table design and avoiding unnecessary column creation.
-
 question: "Taylor, a data engineer, is creating multiple tables across different projects that need similar columns (e.g., 'sample_id' as STRING with max length 50). They want to understand how Synapse handles column definitions to optimize their table design approach. What's the key characteristic of Column Models in Synapse?"
-
 answers:
   - text: "Each table must define its own unique Column Models - sharing columns across tables isn't supported"
     correct: false
     message: "This is incorrect. Column Models are specifically designed to be reusable across tables and projects to promote consistency and efficiency."
+    points: 0
   - text: "Column Models are global, immutable, and reusable - identical column definitions will return the same Column Model ID"
     correct: true
     message: "Correct! Column Models are global objects without owners. If two users create identical columns (same name, type, size, constraints), they receive the same Column Model ID, promoting reuse and consistency."
+    points: 1
   - text: "Column Models are project-specific and must be recreated when copying tables to different projects"
     correct: false
     message: "Column Models are global, not project-specific. They can be shared across any project, making table copying and replication more efficient."
+    points: 0
   - text: "Column Models are user-owned objects that require permission grants to be shared across teams"
     correct: false
     message: "Column Models don't have owners or creators. They're global system objects that are automatically shared when identical definitions are created."
-
+    points: 0
 allow_retry: true
 random_answer_order: true
