@@ -1,0 +1,30 @@
+type: "quiz"
+level: "intermediate"
+meta:
+  source: "https://rest-docs.synapse.org/rest/org/sagebionetworks/repo/model/AccessRequirement.html"
+  source_date: "2024"
+  key_concepts: ["access requirements", "AR types", "self-signed", "ACT approved", "governance", "multiple ARs"]
+
+context: |
+  **Understanding Different Types of Access Requirements**
+  
+  Synapse supports different types of Access Requirements, each serving specific governance needs. Some ARs can be approved automatically when users agree to terms (self-signed), while others require manual review and approval by ACT. The choice of AR type depends on the sensitivity of the data and regulatory requirements. A single dataset can have multiple ARs applied to address different governance needs.
+
+question: "Dr. Martinez is preparing to share two different datasets: (1) a reference genome for a newly sequenced plant species requiring citation of the species discovery paper, and (2) human genetic data requiring citation of a different genomics methodology paper plus IRB approval verification. She needs to set up appropriate Access Requirements for each. Which combination of AR types would be most appropriate for these two datasets?"
+
+answers:
+  - text: "Both datasets should use a single ACT-approved AR since they contain research data"
+    correct: false
+    message: "While this would work, it's unnecessarily complex for the plant genome which only needs citation requirements. Also, the human genetic data actually needs two separate ARs to address both citation and IRB verification requirements."
+  - text: "Plant genome: self-signed AR for species paper citation, Human genetic data: self-signed AR for methodology paper citation plus ACT-approved AR for IRB verification"
+    correct: true
+    message: "Correct! The plant genome needs only a self-signed AR for citing the species discovery paper. The human genetic data requires two ARs: a self-signed AR for citing the methodology paper and an ACT-approved AR for IRB verification. Users must satisfy both to gain access."
+  - text: "Both datasets should use self-signed ARs to streamline access for researchers"
+    correct: false
+    message: "Self-signed ARs cannot provide the necessary oversight for human genetic data requiring IRB approval verification, which needs manual review by ACT."
+  - text: "Plant genome: no AR needed, Human genetic data: single ACT-approved AR covering both citation and IRB requirements"
+    correct: false
+    message: "Plant reference genomes should have citation requirements enforced through ARs. While a single ACT-approved AR could handle both requirements for human data, using separate ARs provides clearer governance separation."
+
+allow_retry: true
+random_answer_order: true

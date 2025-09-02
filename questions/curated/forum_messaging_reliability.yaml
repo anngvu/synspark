@@ -1,0 +1,31 @@
+type: "quiz"
+level: "advanced"
+meta:
+  source: "2025-07-21.txt"
+  source_date: "2025-07-21"
+  source_timestamps: ["2025-07-21 13:59:56", "2025-07-21 19:37:26"]
+  key_concepts: ["messaging API", "email delivery", "spam prevention", "challenge evaluation"]
+
+context: |
+  **Synapse Messaging System**
+  
+  Synapse provides a messaging API that allows programmatic sending of notifications to users, commonly used in challenge evaluation pipelines. Understanding the factors that can affect message delivery is important for reliable automated communications.
+
+question: "Jenny is a challenge coordinator running an automated evaluation pipeline that sends status emails to participants using Synapse's sendMessage API. She notices that some emails with subjects like 'Evaluation Failed: 9755203' are not being delivered, while others like 'Evaluation Failed: 9755202' work fine. The API calls return success responses in both cases. What's the most likely explanation for this inconsistent delivery?"
+
+answers:
+  - text: "The participants have email filters blocking messages with specific submission IDs"
+    correct: false
+    message: "While user-side filtering is possible, the pattern suggests a systematic issue rather than individual user configurations affecting specific message IDs."
+  - text: "There's an internal anti-spam mechanism in Synapse that may cache or limit similar message subjects"
+    correct: true
+    message: "Correct! A 2025 discussion reveals that internal spam prevention logic can sometimes affect delivery based on subject patterns, even when the API returns success responses."
+  - text: "The message body content is causing the delivery failure, not the subject line"
+    correct: false
+    message: "The examples show the same message body being used across different subjects, with subject being the main variable affecting delivery."
+  - text: "The API rate limiting is preventing consecutive messages from being sent"
+    correct: false
+    message: "Rate limiting would typically return error responses, not success responses with failed delivery."
+
+allow_retry: true
+random_answer_order: true

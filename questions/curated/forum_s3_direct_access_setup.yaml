@@ -1,0 +1,75 @@
+type: "quiz"
+level: "intermediate-advanced"
+meta:
+  source: "2022-07-26.txt"
+  source_date: "2022-07-26"
+  source_timestamps: ["2022-07-26 10:13:43", "2022-07-26 20:55:17"]
+  key_concepts: ["S3 integration", "STS credentials", "direct access", "compute optimization"]
+
+context: |
+  **Direct S3 Access Options for Synapse Data**
+  
+  While Synapse provides client libraries for data access, computational biologists working with large datasets may need alternative access methods for specific use cases. Understanding when and how to use direct S3 access can optimize computational workflows.
+
+question: "Morgan, a computational biologist, needs to process 500GB of genomics data stored in Synapse for a machine learning pipeline running on AWS EC2. Instead of using the standard Synapse Python client, they're considering direct S3 access via AWS CLI with STS credentials. What's the primary advantage of this approach for their use case?"
+
+answers:
+  - text: "Direct S3 access bypasses Synapse's access control and authentication requirements"
+    correct: false
+    message: "STS credentials maintain Synapse's security model. Access control is preserved - you can only access data you have permissions for through Synapse."
+  - text: "It eliminates the need to download files locally, enabling compute directly on S3-hosted data"
+    correct: true
+    message: "Correct! Direct S3 access allows compute operations (like AWS Batch, EMR, or EC2 processing) to work directly with data in S3 without downloading through Synapse client, saving time and storage costs for large datasets."
+  - text: "AWS CLI provides better error handling and retry logic than Synapse clients"
+    correct: false
+    message: "Both AWS CLI and Synapse clients have robust error handling. The main advantage isn't about reliability but about computational efficiency for large-scale processing."
+  - text: "Direct access provides faster download speeds than the Synapse Python client"
+    correct: false
+    message: "Download speeds are similar since both ultimately access the same S3 infrastructure. The benefit is avoiding downloads entirely when compute can happen directly on S3."
+
+details: |
+  **When to Use Direct S3 Access with STS Credentials:**
+  
+  Common scenarios where computational biologists choose direct S3 access:
+  
+  - **Large-scale compute workflows**: Processing hundreds of GB/TB without local downloads
+  - **Cloud-native pipelines**: AWS Batch, EMR, or Lambda functions operating directly on S3 data
+  - **Streaming analysis**: Reading data directly into memory without intermediate storage
+  - **Cost optimization**: Avoiding egress charges and storage costs for temporary local copies
+  - **Integration with existing AWS tools**: Leveraging S3-native tools and services
+  
+  **Requesting and Configuring STS Credentials:**
+  
+  1. **Get credentials from Synapse:**
+  ```python
+  import synapseclient
+  syn = synapseclient.Synapse()
+  syn.login()
+  credentials = syn.getSTSCredentials(entity="syn12345", permission="read_only")
+  ```
+  
+  2. **Configure AWS CLI:**
+  ```bash
+  export AWS_ACCESS_KEY_ID=<credentials['accessKeyId']>
+  export AWS_SECRET_ACCESS_KEY=<credentials['secretAccessKey']>
+  export AWS_SESSION_TOKEN=<credentials['sessionToken']>
+  
+  # Now use AWS CLI directly
+  aws s3 cp s3://proddata.sagebase.org/path/to/file ./local_file
+  ```
+  
+  3. **Configure boto3 in Python:**
+  ```python
+  import boto3
+  s3_client = boto3.client(
+      's3',
+      aws_access_key_id=credentials['accessKeyId'],
+      aws_secret_access_key=credentials['secretAccessKey'],
+      aws_session_token=credentials['sessionToken']
+  )
+  ```
+  
+  This approach maintains Synapse permissions while enabling cloud-native compute patterns essential for modern bioinformatics workflows.
+
+allow_retry: true
+random_answer_order: true

@@ -1,0 +1,32 @@
+type: "quiz"
+level: "advanced"
+meta:
+  source: "https://sagebionetworks.jira.com/wiki/spaces/GI/pages/2946695193/AR+Bypass+for+Data+Contributors"
+  source_date: "2023-06-22"
+  key_concepts: ["access requirements", "AR bypass", "data contributors", "ACL on AR", "admin permissions", "team access"]
+  updated_approach: true
+  followup_to: "forum_acl_vs_access_requirements.yaml"
+
+context: |
+  **Maya's Ongoing Access Challenge**
+  
+  Continuing from Maya's situation: After learning that her admin permissions don't bypass Access Requirements, Maya completed the AR approval process and can now access the restricted files. However, she discovers that her team frequently uploads new files to this same dataset, and each time they need to access their own contributed files later, they have to go through the same AR approval process again. Maya wonders if there's a better long-term solution for data contributors.
+
+question: "Maya's research team regularly contributes new data files to their publicly released dataset that has Access Requirements. They find it cumbersome that team members have to repeatedly submit AR approval requests to access files they themselves uploaded. Maya heard there might be a special mechanism for data contributors but isn't sure how it works. What would be the most appropriate solution for Maya's team's ongoing access needs?"
+
+answers:
+  - text: "Request permanent exemption from all Access Requirements for the entire project"
+    correct: false
+    message: "Access Requirements can't be permanently disabled for individual users - they're a governance requirement that applies to the dataset regardless of contributor status."
+  - text: "Add all team members to Maya's existing AR approval so they can share the same access"
+    correct: false
+    message: "This is a valid interim solution - Maya can add team members to her AR approval to avoid duplicate submissions. However, for data contributors, there's a more systematic approach designed specifically for this scenario."
+  - text: "Contact ACT to explore setting up AR Bypass via an ACL on the Access Requirements for data contributors"
+    correct: true
+    message: "Correct! AR Bypass allows ACT to create special teams through ACLs on Access Requirements. Data contributors can be added to these bypass teams, allowing them to access their contributed data without repeated AR submissions."
+  - text: "Switch to using a private project for new uploads, then move files to the public project only when needed"
+    correct: false
+    message: "This workaround would complicate data management and doesn't address the core issue. The AR bypass mechanism is designed specifically for this contributor access scenario."
+
+allow_retry: true
+random_answer_order: true

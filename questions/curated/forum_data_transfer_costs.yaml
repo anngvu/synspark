@@ -1,0 +1,34 @@
+type: "quiz"
+level: "intermediate"
+meta:
+  source: "2023-11-03.txt"
+  source_date: "2023-11-03"
+  source_timestamps: ["2023-11-03 11:03:54", "2023-11-03 13:16:02"]
+  key_concepts: ["data transfer costs", "usage monitoring", "download patterns", "cost management"]
+
+context: |
+  **Monitoring and Managing Data Transfer Costs in Synapse**
+  
+  Large datasets in Synapse can generate significant data transfer costs when heavily accessed. Understanding download patterns and implementing appropriate access controls helps organizations manage these expenses while maintaining data accessibility.
+
+question: "Linda, a data manager, discovers that her organization's 8TB dataset project generated $12,000 in unexpected data transfer costs in one month - representing 40 times the dataset size in downloads. The project was recently made anonymously accessible under a managed plan. What are the most relevant actions to control these costs?"
+
+answers:
+  - text: "Move the dataset to AWS Open Data if possible."
+    correct: true
+    message: "Correct! This solution has been implemented for datasets in the past, but won't be immediate. Restricting dataset access to registered users is still needed."
+  - text: "Immediately restrict the dataset to registered users only to prevent anonymous bulk downloads"
+    correct: true
+    message: "Correct! Anonymous access enables unrestricted downloading, which can lead to excessive costs. Requiring registration provides accountability and allows for usage monitoring and potential download limits."
+  - text: "Move the dataset to a lower-cost storage tier to reduce per-GB transfer charges"
+    correct: false
+    message: "Storage tier changes don't affect data transfer costs, which are charged per GB downloaded regardless of where the data is stored."
+  - text: "Implement CloudFront CDN caching to reduce future transfer costs"
+    correct: false
+    message: "While CloudFront can help with costs, the issue is excessive usage volume, not transfer efficiency."
+  - text: "Compress all files in the dataset to reduce download sizes"
+    correct: false
+    message: "File compression doesn't address the root cause of excessive download volume. If users need the data, they'll still download the compressed files."
+
+allow_retry: true
+random_answer_order: false

@@ -1,0 +1,32 @@
+type: "quiz"
+level: "beginner"
+meta:
+  source: "2021-08-19.txt"
+  source_date: "2021-08-19"
+  source_timestamps: ["2021-08-19 18:52:54", "2021-08-19 19:44:12"]
+  key_concepts: ["date formatting", "timestamp types", "entity view annotations", "data validation"]
+  updated_approach: false
+
+context: |
+  **Date and Timestamp Formatting in Synapse Entity Views**
+  
+  Synapse entity views support different date/timestamp column types, each with specific formatting requirements. Understanding these requirements is crucial for successful annotation uploads and data validation.
+
+question: "Casey, a data curator, is uploading annotations to a Date column in an entity view but receives the error 'Value associated with key=added_at is not valid for type=TIMESTAMP_MS: 2021-01-19T18:02:50Z'. Their dates are formatted as '2021-05-24 04:24:16' as plain text. What's the issue and solution?"
+
+answers:
+  - text: "The dates need timezone information - add 'UTC' or 'Z' suffix to each timestamp"
+    correct: false
+    message: "While timezone info can help, the core issue is that TIMESTAMP_MS columns expect millisecond epoch timestamps, not human-readable date strings."
+  - text: "TIMESTAMP_MS columns require millisecond epoch format (13-digit integers) rather than human-readable dates"
+    correct: true
+    message: "Correct! TIMESTAMP_MS expects values like '1629423830819' (milliseconds since Unix epoch). Convert human-readable dates to millisecond epoch format, or use a DATE column type instead."
+  - text: "The date format should use ISO 8601 standard with 'T' separator between date and time"
+    correct: false
+    message: "ISO 8601 formatting won't resolve this issue. TIMESTAMP_MS columns specifically require numeric epoch timestamps, not any string-based date format."
+  - text: "Entity view date columns only accept dates without time components"
+    correct: false
+    message: "Entity views can handle both dates and timestamps, but TIMESTAMP_MS columns have specific numeric format requirements regardless of whether time is included."
+
+allow_retry: true
+random_answer_order: true

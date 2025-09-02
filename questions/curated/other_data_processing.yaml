@@ -1,0 +1,36 @@
+type: "quiz"
+level: "intermediate"
+meta:
+  custom: true
+
+context: |
+  **Data Security in Automated Workflows with Synapse**
+  
+  When building data processing pipelines that work with Synapse data, consider the available options and which environments are appropriate for different types of data and processing.
+
+question: |
+  "Rachel, a data engineer, needs to automate processing of Synapse data in three separate but related tasks: 
+  1) create a small weekly automation that takes under 10 minutes to query a number of tables and send out a summary report in an email. 
+  2) for newly added data that are image formats which can contain embedded metadata, run a quality check to make sure the images weren't inadvertently uploaded with sensitive metadata such as individual identifiers, visit dates, etc. 
+  3) for newly added data that are raw whole genome sequence (WGS) data and annotated with qualifying batch values and other annotations, run the sarek pipeline to call somatic or germline variants. 
+  What Sage processing environments are most suited for each of these?"
+
+answers:
+  - text: "All tasks are recommended for Sage's nextflow infrastructure only."
+    correct: false
+    message: "Not true. The first task, especially, has other options available."
+  - text: "All tasks are recommended for Sage's Service Catalog infrastructure only."
+    correct: false
+    message: "Not true. The third task is in particular most suited for Sage's nextflow infrastructure."
+  - text: "The first task recommends Sage's nextflow infrastructure, while the second task can be either Sage's Service Catalog or nextflow infrastructure, and the third task is most appropriate for Sage's Service Catalog infrastructure (Scheduled Jobs)."
+    correct: false
+    message: "The suggested environments for the first and third tasks are incorrect."
+  - text: "The first task recommends Sage's Service Catalog infrastructure (Scheduled Jobs), while the second task can be either Sage's Service Catalog or nextflow infrastructure, and the third task is most appropriate for Sage's nextflow infrastructure."
+    correct: true
+    message: "Correct! For the first task, using Scheduled Jobs will be simplest while meeting requirements. The second task can technically be run on either. For the third task, pipelines like sarek are already available on Sage's nextflow instructure, with additional utilities for data staging and indexing results back to Synapse already set up."
+  - text: "All tasks can be run equally well on either Sage's Service Catalog or nextflow infrastructure."
+    correct: false
+    message: "Incorrect. The example here provides some tasks that specifically have different optimal environments."
+
+allow_retry: true
+random_answer_order: true

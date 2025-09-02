@@ -1,0 +1,32 @@
+type: "quiz"
+level: "intermediate"
+meta:
+  source: "2024-01-11.txt"
+  source_date: "2024-01-11"
+  source_timestamps: ["2024-01-11 11:49:20", "2024-01-11 12:13:10"]
+  key_concepts: ["entity versioning", "version history", "deleted versions", "REST API"]
+  updated_approach: false
+
+context: |
+  **Entity Version Management and Deleted Version Tracking**
+  
+  Synapse maintains version history for entities, including information about deleted versions. Understanding how to retrieve comprehensive version information is important for data provenance and audit purposes.
+
+question: "Dr. Kim, a data steward, needs to audit the complete version history of a critical dataset entity, including any versions that may have been deleted. They want to distinguish between active and deleted versions for compliance reporting. What's the most effective approach to retrieve this comprehensive version information?"
+
+answers:
+  - text: "Use syn.getEntityVersions() which returns both active and deleted versions with status indicators"
+    correct: false
+    message: "While getEntityVersions() exists, it doesn't provide detailed status information about deleted versions. A more comprehensive approach is needed."
+  - text: "Use the REST API GET /entity/{id}/version endpoint to retrieve complete version metadata including deletion status"
+    correct: true
+    message: "Correct! The REST API endpoint provides comprehensive version information including status. You can access it via syn.restGET() to get detailed metadata that distinguishes between active and deleted versions."
+  - text: "Compare the total version count with active versions - gaps indicate deleted versions"
+    correct: false
+    message: "While this method can identify that deletions occurred, it doesn't provide the detailed metadata needed for proper audit trails and compliance reporting."
+  - text: "Query the entity's provenance records to reconstruct the complete version history"
+    correct: false
+    message: "Provenance tracks data lineage and workflows, not the entity's version status. Version information requires direct entity version APIs."
+
+allow_retry: true
+random_answer_order: true

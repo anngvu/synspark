@@ -1,0 +1,31 @@
+type: "quiz"
+level: "intermediate"
+meta:
+  source: "2023-10-18.txt"
+  source_date: "2023-10-18"
+  source_timestamps: ["2023-10-18 06:13:04", "2023-10-18 09:26:02"]
+  key_concepts: ["API rate limiting", "bulk operations", "performance optimization", "batch processing"]
+
+context: |
+  **API Rate Limiting and Bulk Operations in Synapse**
+  
+  When performing large-scale operations like uploading thousands of files with annotations, users may encounter API rate limits designed to protect server resources. Understanding these limits and optimization strategies is crucial for efficient bulk data management.
+
+question: "Oliver, a data engineer, is using `synapse sync` to upload 30,000 small files with metadata annotations. His second batch runs much slower (180 kB/s vs 7 MB/s) with warnings about 'Requests are too frequent for API call /entity/#/bundle2. Allowed 240 requests every 60 seconds.' What's the most effective long-term solution to this performance issue?"
+
+answers:
+  - text: "Reduce the upload batch size and add delays between requests to stay under the rate limit"
+    correct: false
+    message: "While this avoids rate limiting, it makes uploads even slower and doesn't address the underlying inefficiency of making individual API calls for each file's metadata."
+  - text: "Use the table API for batch annotation updates instead of individual entity bundle calls"
+    correct: true
+    message: "Correct! The table API can update annotations for thousands of files in fewer API calls, dramatically reducing the number of requests and avoiding rate limits while improving performance."
+  - text: "Upload files first without annotations, then add annotations in a separate process"
+    correct: false
+    message: "This separation doesn't solve the rate limiting issue - adding annotations later would still require the same number of API calls and face the same limits."
+  - text: "Request increased rate limits from Synapse support for the specific project"
+    correct: false
+    message: "While this is possible and might be the correct path if there were indeed no existing alternative, a more efficient API that requires fewer requests *does* exist."
+
+allow_retry: true
+random_answer_order: true

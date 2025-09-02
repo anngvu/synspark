@@ -1,0 +1,31 @@
+type: "quiz"
+level: "intermediate"
+meta:
+  source: "2021-02-11.json"
+  source_date: "2021-02-11"
+  source_timestamps: ["2021-02-11 18:10:04"]
+  key_concepts: ["table validation", "upload performance", "schema compliance", "pre-upload validation", "large datasets"]
+
+context: |
+  **Table Upload Validation Timing and Performance**
+  
+  Synapse validates table data during the upload process, not before it starts. For large datasets, this means validation errors can occur hours into an upload, wasting significant time and bandwidth when uploads fail partway through processing millions of rows.
+
+question: "Sarah, a bioinformatics researcher, has a 5GB dataset with 2 million rows to upload to a Synapse table. Her previous 1 million row upload failed after 2 hours when it hit a schema validation error at row 950,000. What's the BEST strategy for Sarah to avoid wasting hours on validation failures?"
+
+answers:
+  - text: "Always let Synapse handle validation during upload - it knows the schema best"
+    correct: false
+    message: "While Synapse validation is authoritative, it wastes significant time and bandwidth when large uploads fail partway through. For datasets this size, the cost-benefit favors pre-validation."
+  - text: "Upload small test batches first to identify potential validation issues"
+    correct: false
+    message: "Test batches help but are time-consuming and may miss edge cases or issues that only appear in the full dataset. This approach doesn't scale well."
+  - text: "For large tables, implement your own validation by fetching the table schema first"
+    correct: true
+    message: "Correct! Fetch the table schema using APIs like syn.getTableColumns(), then validate your DataFrame locally against column constraints, data types, and required fields before starting the upload."
+  - text: "Split large datasets into many small uploads to minimize failure impact"
+    correct: false
+    message: "This creates fragmented data, complex merge logic, and doesn't solve the validation problem - each chunk could still fail for schema reasons."
+
+allow_retry: true
+random_answer_order: true

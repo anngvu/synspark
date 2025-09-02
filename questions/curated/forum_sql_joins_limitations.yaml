@@ -1,0 +1,31 @@
+type: "quiz"
+level: "intermediate"
+meta:
+  source: "2023-10-19.txt"
+  source_date: "2023-10-19"
+  source_timestamps: ["2023-10-19 09:26:02", "2023-10-19 09:43:17"]
+  key_concepts: ["SQL joins", "materialized views", "table operations", "file views"]
+
+context: |
+  **SQL JOIN Operations in Synapse**
+  
+  Synapse supports various SQL operations including JOINs between tables, file views, and materialized views. Understanding which types of JOINs are supported and their limitations is important for complex data analysis workflows.
+
+question: "Dr. Wang is creating a materialized view in Synapse to combine data from various tables and file views. To help Dr. Wang understand the limitations in case another approach is needed for what she wants, which type of JOIN operation does Synapse NOT support for materialized view?"
+
+answers:
+  - text: "LEFT JOIN between a table and a file view"
+    correct: false
+    message: "LEFT JOINs are well-supported in Synapse. The forum discussion shows a successful LEFT JOIN between tables and file views."
+  - text: "INNER JOIN between two tables with matching columns"
+    correct: false
+    message: "INNER JOINs between tables are a core SQL feature that Synapse supports without issues."
+  - text: "RIGHT JOIN between two file views in the same project"
+    correct: false
+    message: "RIGHT JOINs are supported in Synapse."
+  - text: "FULL OUTER JOIN between two tables in the same project"
+    correct: true
+    message: "FULL OUTER JOINs are not supported in Synapse. A workaround is to do this type of join outside of Synapse (e.g. with R/tidyverse and upload the results back to Synapse)."
+
+allow_retry: true
+random_answer_order: true

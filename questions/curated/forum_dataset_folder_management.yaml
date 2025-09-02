@@ -1,0 +1,31 @@
+type: "quiz"
+level: "beginner"
+meta:
+  source: "2024-08-13.txt"
+  source_date: "2024-08-13"
+  source_timestamps: ["2024-08-13 09:01:47", "2024-08-13 10:03:08"]
+  key_concepts: ["datasets", "folder management", "GUI limitations", "programmatic solutions"]
+
+context: |
+  **Managing Datasets with Nested Folder Structures in Synapse**
+  
+  Synapse Datasets allow researchers to organize and reference collections of files for analysis. When working with projects that have complex nested folder structures, understanding the different approaches for adding content to datasets is important for efficient data management.
+
+question: "Morgan, a data manager, needs to create a Synapse Dataset that includes hundreds of files organized in nested folders within her project. Using the web UI to manually browse and select individual files is very time-consuming. What's the most efficient approach to add all files from specific folders to her dataset?"
+
+answers:
+  - text: "Use the web interface's search function to find and select files by name patterns"
+    correct: false
+    message: "While search might be a slight improvement to find individual files, it doesn't solve the problem of efficiently adding entire folder hierarchies to a dataset."
+  - text: "Create separate datasets for each folder level to avoid the nested structure problem"
+    correct: false
+    message: "This creates unnecessary complexity and defeats the purpose of having a unified dataset for analysis."
+  - text: "Use the programmatic dataset.add_folder() method to add entire folder hierarchies at once"
+    correct: true
+    message: "Correct! The add_folder() method programmatically adds all files within a folder (including nested subfolders) to the dataset, avoiding manual selection of hundreds of individual files."
+  - text: "Export a file manifest and import it into the dataset creation UI"
+    correct: false
+    message: "Unfortunately, Synapse Datasets currently don't support manifest-based creation. The most efficient approach is using the programmatic folder addition method. But you can explore creating submitting/advocating for a Synapse feature request to make this a viable answer."
+
+allow_retry: true
+random_answer_order: true

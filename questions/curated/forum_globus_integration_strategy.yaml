@@ -1,0 +1,31 @@
+type: "quiz"
+level: "intermediate-advanced"
+meta:
+  source: "2022-07-20.txt"
+  source_date: "2022-07-20"
+  source_timestamps: ["2022-07-20 10:23:00", "2022-07-20 14:49:38"]
+  key_concepts: ["Globus integration", "bulk uploads", "S3 indexing", "data transfer workflows"]
+
+context: |
+  **Integrating Globus Transfers with Synapse Data Management**
+  
+  Research organizations often use Globus for large-scale data transfers due to its reliability and performance. However, Globus doesn't directly integrate with Synapse, requiring alternative workflows to make transferred data available through the Synapse platform.
+
+question: "Marcus, a research data engineer, needs to enable large-scale contributors to upload terabytes of data to Synapse using Globus transfers. The contributors want to avoid downloading data locally before upload due to bandwidth and storage constraints. What's the most appropriate workflow to support this requirement?"
+
+answers:
+  - text: "Configure Globus to transfer directly to Synapse's default storage bucket"
+    correct: false
+    message: "Globus is currently NOT integrated with Synapse's API or storage systems. Direct transfers to Synapse storage aren't supported."
+  - text: "Set up a custom S3 bucket with Globus S3 connector, then programmatically index the files in Synapse"
+    correct: true
+    message: "Correct! This is the established approach: use Globus S3 connector to transfer to a custom S3 bucket, then use Synapse's indexing capabilities to make the files accessible through Synapse without data duplication."
+  - text: "Ask contributors to upload files to Globus, then download them to a Synapse-compatible system for re-upload"
+    correct: false
+    message: "This defeats the purpose of avoiding local downloads and re-uploads. It adds unnecessary data movement and complexity."
+  - text: "Create direct API integration between Globus and Synapse using webhook notifications"
+    correct: false
+    message: "While webhooks could notify about transfers, this doesn't solve the fundamental issue that Globus and Synapse use different storage and transfer protocols."
+
+allow_retry: true
+random_answer_order: true

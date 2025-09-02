@@ -1,0 +1,31 @@
+type: "quiz"
+level: "intermediate"
+meta:
+  source: "2016-10-27.txt"
+  source_date: "2016-10-27"
+  source_timestamps: ["2016-10-27 11:08:31", "2016-10-27 11:48:12"]
+  key_concepts: ["team privacy", "data access control", "challenge management", "privacy regulations"]
+
+context: |
+  **Managing Privacy in Synapse Team-Based Access Control**
+  
+  Synapse teams provide convenient mechanisms for managing data access permissions, but team memberships are typically visible to other team members. Some research contexts require private access management due to regulatory or competitive requirements.
+
+question: "Elena, a challenge coordinator, needs to grant data access to participants in a competitive challenge where team membership must remain confidential. Using public Synapse teams would reveal participant identities to competitors. What's the most appropriate access control strategy?"
+
+answers:
+  - text: "Ask participants to create anonymous usernames and use teams normally"
+    correct: false
+    message: "Obfuscating usernames has broader implications beyond the challenge and may conflict with institutional requirements for transparent identity in collaborative research."
+  - text: "Create a single shared Synapse account that all team members use for submissions"
+    correct: false
+    message: "Account sharing violates Synapse Terms of Use and creates security, auditing, and accountability issues. It's not a recommended practice."
+  - text: "Add individual users directly to Access Control Lists (ACLs) instead of using teams"
+    correct: true
+    message: "Correct! Direct ACL membership isn't publicly visible like team membership. This provides the necessary access control while maintaining confidentiality of participant identities."
+  - text: "Use teams but avoid displaying team names on any public wiki pages or documentation"
+    correct: false
+    message: "Team membership is still visible to other team members regardless of whether team names appear in documentation. This doesn't solve the privacy requirement."
+
+allow_retry: true
+random_answer_order: true

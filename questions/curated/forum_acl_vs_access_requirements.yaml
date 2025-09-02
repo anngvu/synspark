@@ -1,0 +1,32 @@
+type: "quiz"
+level: "intermediate"
+meta:
+  source: "2021-09-14.txt"
+  source_date: "2021-09-14"
+  source_timestamps: ["2021-09-14 16:19:54", "2021-09-14 16:50:41"]
+  key_concepts: ["access control lists", "access requirements", "permissions", "data governance"]
+  updated_approach: false
+
+context: |
+  **Understanding ACLs vs Access Requirements in Synapse**
+  
+  Synapse uses two distinct mechanisms to control data access: Access Control Lists (ACLs) and Access Requirements (ARs). These work independently and serve different purposes in data governance, which can sometimes cause confusion when troubleshooting access issues.
+
+question: "Maya, a researcher with admin access to her project, is confused because she can't access some files that her team members uploaded. Within the same project, she can download some files but gets 'access denied' errors for others. The files she can't access all have Access Requirements that were applied when the dataset was publicly released, while the accessible ones don't have any Access Requirements. What's most likely preventing Maya from accessing these files despite her admin permissions?"
+
+answers:
+  - text: "Admin permissions should override all access restrictions - this is likely a system bug"
+    correct: false
+    message: "Admin permissions don't automatically bypass Access Requirements. ARs are a separate governance layer that applies even to users with admin ACL permissions."
+  - text: "Maya hasn't completed the Access Requirements approval process for the publicly released dataset"
+    correct: true
+    message: "Correct! Access Requirements operate independently from ACL permissions. Even with admin access, Maya must still fulfill the Access Requirements (like signing agreements, providing justification, etc.) that were applied when the dataset was released."
+  - text: "The files with Access Requirements are corrupted or have different storage permissions"
+    correct: false
+    message: "This isn't a storage or file integrity issue. Access Requirements are a governance mechanism that requires separate approval regardless of ACL permissions."
+  - text: "Maya's admin permissions expired and need to be renewed by the project owner"
+    correct: false
+    message: "If Maya's admin permissions had expired, she wouldn't be able to access any files in the project. The issue is specifically with Access Requirements, not ACL permissions."
+
+allow_retry: true
+random_answer_order: true
