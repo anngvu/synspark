@@ -23,7 +23,7 @@ answers:
     correct: true
     message: "Correct! Table queries can process multiple files efficiently and include actions required summary data, making it much more scalable for large datasets than individual file queries."
     points: 1
-  - text: "Recommend submitting a Synapse feature request where Synapse can materialize the desired annotation summarizingß the data access status for all files."
+  - text: "Recommend submitting a Synapse feature request where Synapse can materialize the desired annotation summarizing the data access status for all files."
     correct: true
     message: "Nice! This is a scalable and future-forward approach that would benefit all portals, not just Emma's portal, and update the status of the files in real-time."
     points: 2
