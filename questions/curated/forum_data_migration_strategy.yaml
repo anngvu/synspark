@@ -5,27 +5,28 @@ meta:
   source_date: "2018-07-10"
   source_timestamps: ["2018-07-10 11:13:58", "2018-07-10 12:25:01"]
   key_concepts: ["data migration", "storage locations", "external storage", "file management"]
-
+  multiple_correct: false
 context: |
   **Data Migration Between Storage Locations in Synapse**
-  
+
   Organizations sometimes need to migrate data from Synapse's default storage to their own external S3 buckets while maintaining the same project structure and file accessibility through Synapse. This process requires careful planning to avoid data loss and maintain continuity.
-
 question: "Kevin, a project manager, needs to migrate all files in his Synapse project from default Synapse storage to his organization's external S3 bucket. The project contains important versioned files that users actively access. What's the most appropriate migration strategy?"
-
 answers:
   - text: "Use synapseutils.copy utility to directly move files between storage locations"
     correct: false
     message: "The copy utility moves files between projects, not between storage locations within the same project. It doesn't address storage location changes."
+    points: 0
   - text: "Change the project's storage location setting, then download and re-upload all files to trigger migration"
     correct: true
     message: "Correct! Changing the storage location setting affects future uploads. Downloading and re-uploading (with force version) places files in the new storage while maintaining project structure and version history."
+    points: 1
   - text: "Create a new project with the external storage, copy files, then delete the old project"
     correct: false
     message: "This changes project IDs and breaks existing links/references. It's more disruptive than necessary for a storage migration."
+    points: 0
   - text: "Mount the external S3 bucket on an EC2 instance and transfer files directly"
     correct: false
     message: "Direct S3-to-S3 transfer bypasses Synapse's file management system and wouldn't update Synapse's file handle references to point to the new location."
-
+    points: 0
 allow_retry: true
 random_answer_order: true

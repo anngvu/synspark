@@ -6,27 +6,28 @@ meta:
   source_timestamps: ["2024-12-19 11:55:13", "2024-12-19 12:09:01"]
   key_concepts: ["data warehouse", "user troubleshooting", "team membership", "Snowflake queries"]
   updated_approach: false
-
+  multiple_correct: false
 context: |
   **Using Data Warehouse for User Support and Analysis**
-  
+
   Synapse's data warehouse in Snowflake provides powerful tools for analyzing user issues that may not be immediately visible through the web interface. Understanding how to query user and team relationships can help resolve access problems efficiently.
-
 question: "Sam, a support engineer, receives a ticket from a user who can't download data from a challenge project despite claiming to have the necessary access. The user's email is available but Sam needs to understand their team memberships to troubleshoot. What's the most efficient approach using available tools?"
-
 answers:
   - text: "Ask the user to provide screenshots of their team memberships from their profile page"
     correct: false
     message: "While this might work, it's slower and relies on user cooperation. More direct technical approaches are available for support staff."
+    points: 0
   - text: "Query the data warehouse to find the user ID from email, then check their team memberships in TEAMMEMBER_LATEST table"
     correct: true
     message: "Correct! Using Snowflake warehouse is best for this approach, with these queries: first SELECT id FROM USERPROFILE_LATEST WHERE email='user@example.com', then SELECT * FROM TEAMMEMBER_LATEST WHERE member_id = [user_id] provides complete team membership analysis."
+    points: 1
   - text: "Check the challenge project's access control list to see if the user appears there"
     correct: false
     message: "Project ACLs show permissions but don't reveal the underlying team membership structure needed to understand why access might be missing."
+    points: 0
   - text: "Use the Python client to programmatically retrieve the user's profile and team information"
     correct: false
     message: "While possible, the data warehouse provides more comprehensive analysis capabilities and is a shorter path for this type of support investigation."
-
+    points: 0
 allow_retry: true
 random_answer_order: true

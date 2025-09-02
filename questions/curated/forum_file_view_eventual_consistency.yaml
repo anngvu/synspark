@@ -5,27 +5,28 @@ meta:
   source_date: "2024-11-25"
   source_timestamps: ["2024-11-25 18:13:20"]
   key_concepts: ["eventual consistency", "file views", "indexing lag", "production workflows", "data processing"]
-
+  multiple_correct: false
 context: |
   **File View Indexing Lag in Production Workflows**
-  
+
   Production systems using Synapse file views experience indexing delays. When users upload files to folders monitored by file views, the files don't immediately appear in file view queries. Similarly, deleted files may still appear in queries until the index catches up. This affects applications that rely on file views for real-time file discovery and data processing workflows.
-
 question: "Your production workflow involves users uploading files then immediately using an application to process data based on file view queries. Users report 'not found' errors even though they just uploaded files to that folder. The current workaround is running dummy queries like `syn.tableQuery('select * from NNN limit 1')` to trigger indexing. What's currently the most robust architectural solution (workaround) for this eventual consistency problem?"
-
 answers:
   - text: "Add fixed sleep delays before querying file views to allow indexing to complete"
     correct: false
     message: "Sleep delays are unreliable since indexing timing varies unpredictably. This degrades user experience and doesn't guarantee consistency."
+    points: 0
   - text: "Use getChildren() instead of file views for existence checks, falling back to file views only when SQL capabilities are needed"
     correct: true
     message: "Correct! getChildren() always returns the current state of folders immediately after uploads/deletions, providing reliable existence checks. File views can still be used when their SQL query capabilities are specifically needed."
+    points: 1
   - text: "Implement retry loops that keep querying file views until the expected files appear"
     correct: false
     message: "While this may work, it's computationally expensive, creates poor user experience with unpredictable delays, and doesn't solve the core consistency issue."
+    points: 0
   - text: "Implement webhooks to trigger file view re-indexing after every file operation"
     correct: false
     message: "Webhooks can't force immediate file view indexing. File view indexing is inherently asynchronous and can't be made synchronous without significant performance impacts."
-
+    points: 0
 allow_retry: true
 random_answer_order: true

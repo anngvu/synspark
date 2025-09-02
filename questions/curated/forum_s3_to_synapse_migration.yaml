@@ -5,27 +5,28 @@ meta:
   source_date: "2018-10-29"
   source_timestamps: ["2018-10-29 18:12:55"]
   key_concepts: ["s3 migration", "external file handles", "md5 checksums", "etag limitations", "aws lambda", "multipart uploads"]
-
+  multiple_correct: false
 context: |
   **S3-to-Synapse Data Migration Challenges**
-  
+
   Synapse requires MD5 checksums for creating external file handles that point to S3 objects. However, S3 ETags are not MD5 hashes for files uploaded as multipart uploads (typically >16MB via AWS Console) or encrypted objects. This creates a challenge when migrating large collections of existing S3 files to Synapse.
-
 question: "Alex, a data engineer, needs to migrate 10,000+ files from an S3 bucket to Synapse using external file handles. The files range from 1MB to 50GB, with many uploaded via AWS Console (multipart uploads). Synapse requires MD5 checksums, but S3 ETags aren't MD5 for multipart uploads. What's the BEST approach for obtaining the required MD5 checksums?"
-
 answers:
   - text: "Use S3 ETags directly as MD5 checksums for all files"
     correct: false
     message: "S3 ETags are not MD5 hashes for multipart uploads (files >16MB uploaded via console) or encrypted objects. Using ETags directly would cause external file handle creation to fail."
+    points: 0
   - text: "Download all files locally to compute MD5 checksums, then create external file handles"
     correct: false
     message: "This approach is bandwidth-intensive and defeats the purpose of using external file handles. For 50GB files, downloading would be extremely inefficient."
+    points: 0
   - text: "Use AWS Lambda to compute MD5 for files in-place, storing checksums in S3 custom metadata"
     correct: true
     message: "Correct! Lambda can stream S3 objects to compute MD5 without downloading, scales serverlessly for large batches, and can store results in S3 metadata for future reference."
+    points: 1
   - text: "Contact original data contributors to provide MD5 checksums for their uploads"
     correct: false
     message: "MD5 checksums from contributors may not exist, be available, or be reliable. This approach doesn't scale for large collections and creates dependencies on external parties."
-
+    points: 0
 allow_retry: true
 random_answer_order: true

@@ -2,6 +2,7 @@ type: "quiz"
 level: "intermediate"
 meta:
   custom: true
+  multiple_correct: false
 
 context: |
   **Data Security in Automated Workflows with Synapse**
@@ -19,18 +20,23 @@ answers:
   - text: "All tasks are recommended for Sage's nextflow infrastructure only."
     correct: false
     message: "Not true. The first task, especially, has other options available."
+    points: 0
   - text: "All tasks are recommended for Sage's Service Catalog infrastructure only."
     correct: false
     message: "Not true. The third task is in particular most suited for Sage's nextflow infrastructure."
+    points: 0
   - text: "The first task recommends Sage's nextflow infrastructure, while the second task can be either Sage's Service Catalog or nextflow infrastructure, and the third task is most appropriate for Sage's Service Catalog infrastructure (Scheduled Jobs)."
     correct: false
     message: "The suggested environments for the first and third tasks are incorrect."
+    points: 0
   - text: "The first task recommends Sage's Service Catalog infrastructure (Scheduled Jobs), while the second task can be either Sage's Service Catalog or nextflow infrastructure, and the third task is most appropriate for Sage's nextflow infrastructure."
     correct: true
     message: "Correct! For the first task, using Scheduled Jobs will be simplest while meeting requirements. The second task can technically be run on either. For the third task, pipelines like sarek are already available on Sage's nextflow instructure, with additional utilities for data staging and indexing results back to Synapse already set up."
+    points: 1
   - text: "All tasks can be run equally well on either Sage's Service Catalog or nextflow infrastructure."
     correct: false
     message: "Incorrect. The example here provides some tasks that specifically have different optimal environments."
+    points: 0
 
 allow_retry: true
 random_answer_order: true

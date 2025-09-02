@@ -5,6 +5,7 @@ meta:
   source_date: "2023-10-18"
   source_timestamps: ["2023-10-18 06:13:04", "2023-10-18 09:26:02"]
   key_concepts: ["API rate limiting", "bulk operations", "performance optimization", "batch processing"]
+  multiple_correct: false
 
 context: |
   **API Rate Limiting and Bulk Operations in Synapse**
@@ -17,15 +18,19 @@ answers:
   - text: "Reduce the upload batch size and add delays between requests to stay under the rate limit"
     correct: false
     message: "While this avoids rate limiting, it makes uploads even slower and doesn't address the underlying inefficiency of making individual API calls for each file's metadata."
+    points: 0
   - text: "Use the table API for batch annotation updates instead of individual entity bundle calls"
     correct: true
     message: "Correct! The table API can update annotations for thousands of files in fewer API calls, dramatically reducing the number of requests and avoiding rate limits while improving performance."
+    points: 1
   - text: "Upload files first without annotations, then add annotations in a separate process"
     correct: false
     message: "This separation doesn't solve the rate limiting issue - adding annotations later would still require the same number of API calls and face the same limits."
+    points: 0
   - text: "Request increased rate limits from Synapse support for the specific project"
     correct: false
     message: "While this is possible and might be the correct path if there were indeed no existing alternative, a more efficient API that requires fewer requests *does* exist."
+    points: 0
 
 allow_retry: true
 random_answer_order: true

@@ -5,27 +5,28 @@ meta:
   source_date: "2024-07-24"
   source_timestamps: ["2024-07-24 15:36:00", "2024-07-24 15:46:16"]
   key_concepts: ["access levels", "open data", "public access", "data classification", "download permissions"]
-
+  multiple_correct: false
 context: |
   **Understanding Access Level Classifications in Synapse**
-  
+
   Synapse supports different levels of data access, and understanding the distinction between terms like "Open Data," "Public Access," and access requiring login is crucial for proper data classification and user expectations. These distinctions affect how users can discover and access data.
-
 question: "Jordan, a data manager, is setting up access levels for a new dataset and wants to ensure proper classification. They're confused about when to use different access designations. What's the key distinction between OPEN_DATA and PUBLIC access in Synapse?"
-
 answers:
   - text: "OPEN_DATA requires Synapse user login while PUBLIC access allows anonymous downloads"
     correct: false
     message: "This is backwards. OPEN_DATA is the more open designation, not PUBLIC access."
+    points: 0
   - text: "OPEN_DATA allows downloads without any login while PUBLIC access requires Synapse user login"
     correct: true
     message: "Correct! OPEN_DATA designation enables downloads without login (very few files qualify), while PUBLIC access (the 'Make Public' setting) requires Synapse user login but no additional permissions."
+    points: 1
   - text: "Both OPEN_DATA and PUBLIC require the same level of access - just different terminology"
     correct: false
     message: "These are distinct access levels with different requirements. Using them interchangeably would create confusion for users and incorrect expectations."
+    points: 0
   - text: "OPEN_DATA is for research data while PUBLIC is for documentation and metadata only"
     correct: false
     message: "The distinction isn't based on content type but on authentication requirements. Both can be used for any type of data depending on access policies."
-
+    points: 0
 allow_retry: true
 random_answer_order: true
