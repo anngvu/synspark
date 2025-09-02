@@ -1,18 +1,19 @@
 type: "quiz"
-level: "advanced"
+level: "intermediate-advanced"
 meta:
   source: "2024-07-24.txt"
   source_date: "2024-07-24"
   source_timestamps: ["2024-07-24 12:19:09", "2024-07-24 12:20:38"]
   key_concepts: ["access control metadata", "data annotation", "portal filtering", "API automation"]
   updated_approach: true
+  multiple_correct: true
 
 context: |
   **Annotating Files with Access Status for Portal Discovery**
   
   Research portals need to help users understand which datasets are immediately accessible versus those requiring additional steps or still under embargo. Creating systematic annotations about access requirements enables better data discovery and filtering.
 
-question: "Emma, a portal owner, wants to enhance the portal by having files annotated with their access status (public without access requirements, public but restricted with requirements, not public) to enable better filtering on the portal. She proposes having a data manager use a 'naive' account with no special permissions to query access requirements weekly and add the appropriate annotation back to the files as a job. The portal currently has 293,856 files and continues to grow. How can you help extend her thinking for the outcome desired?"
+question: "Emma, a portal owner, is thinking of features that can be on the roadmap for next year. She wants to enhance the portal by having files annotated with their access status (public without access requirements, public but restricted with requirements, not public) to enable better filtering on the portal. She proposes having a data manager use a 'naive' account with no special permissions to query access requirements weekly and add the appropriate annotation back to the files as an automated job. The portal currently has 293,856 files and continues to grow. What below actions make sense given the outcome desired?"
 
 answers:
   - text: "Recommend using the individual file entity GET /entity/{id}/actions/download endpoint for each file"
@@ -23,9 +24,9 @@ answers:
     correct: true
     message: "Correct! Table queries can process multiple files efficiently and include actions required summary data, making it much more scalable for large datasets than individual file queries."
     points: 1
-  - text: "Recommend submitting a Synapse feature request where Synapse can materialize the desired annotation summarizing the data access status for all files."
+  - text: "Suggest submitting a Synapse feature request where Synapse can materialize the desired annotation summarizing the data access status for all files."
     correct: true
-    message: "Nice! This is a scalable and future-forward approach that would benefit all portals, not just Emma's portal, and update the status of the files in real-time."
+    message: "Not bad! This is a scalable and future-forward approach that might benefit all portals, not just Emma's portal, and update the status of the files in real-time."
     points: 2
   - text: "Recommend using the async download list service to get bulk access information for all files"
     correct: false
