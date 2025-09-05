@@ -1,4 +1,5 @@
 type: "quiz"
+title: "Maya's File Access Issues"
 level: "intermediate"
 meta:
   source: "2021-09-14.txt"

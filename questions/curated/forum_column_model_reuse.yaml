@@ -1,4 +1,5 @@
 type: "quiz"
+title: "Taylor's Column Model Design"
 level: "intermediate"
 meta:
   source: "2020-04-23.txt"

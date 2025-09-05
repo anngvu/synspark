@@ -1,4 +1,5 @@
 type: "quiz"
+title: "Morgan's Dataset Creation Challenge"
 level: "beginner"
 meta:
   source: "2024-08-13.txt"

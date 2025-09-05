@@ -1,4 +1,5 @@
 type: "quiz"
+title: "Maya's Data Access Followup"
 level: "advanced"
 meta:
   source: "https://sagebionetworks.jira.com/wiki/spaces/GI/pages/2946695193/AR+Bypass+for+Data+Contributors"

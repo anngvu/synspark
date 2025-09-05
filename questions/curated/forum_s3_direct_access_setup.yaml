@@ -1,4 +1,5 @@
 type: "quiz"
+title: "Morgan's Direct S3 Access Setup"
 level: "intermediate-advanced"
 meta:
   source: "2022-07-26.txt"
