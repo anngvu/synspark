@@ -5,12 +5,13 @@ meta:
   source_date: "2018-07-10"
   source_timestamps: ["2018-07-10 11:13:58", "2018-07-10 12:25:01"]
   key_concepts: ["data migration", "storage locations", "external storage", "file management"]
-  multiple_correct: false
+  updated_approach: true
+  multiple_correct: true
 context: |
   **Data Migration Between Storage Locations in Synapse**
 
   Organizations sometimes need to migrate data from Synapse's default storage to their own external S3 buckets while maintaining the same project structure and file accessibility through Synapse. This process requires careful planning to avoid data loss and maintain continuity.
-question: "Kevin, a project manager, needs to migrate all files in his Synapse project from default Synapse storage to his organization's external S3 bucket. The project contains important versioned files that users actively access. What's the most appropriate migration strategy?"
+question: "Kevin, a project manager, needs to migrate all files in his Synapse project from default Synapse storage to his organization's external S3 bucket. The project contains important versioned files that users actively access. What's the migration strategy to use?"
 answers:
   - text: "Use synapseutils.copy utility to directly move files between storage locations"
     correct: false
@@ -28,5 +29,8 @@ answers:
     correct: false
     message: "Direct S3-to-S3 transfer bypasses Synapse's file management system and wouldn't update Synapse's file handle references to point to the new location."
     points: 0
+  - text: "Use the `synapse migrate` command from the cli."
+    message: "Excellent! See https://python-docs.synapse.org/en/stable/guides/data_storage/#storage-location-migration"
+    points: 2
 allow_retry: true
 random_answer_order: true
