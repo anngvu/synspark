@@ -4,38 +4,34 @@ meta:
   source: "2022-09-14.txt"
   source_date: "2022-09-14"
   source_timestamps: ["2022-09-14 13:25:05", "2022-09-14 13:35:25"]
-  key_concepts: ["materialized views", "UNION operations", "table consolidation", "workarounds"]
+  key_concepts: ["materialized views", "UNION operations", "table consolidation"]
   updated_approach: true
   multiple_correct: false
 context: |
   **Table Consolidation Strategies in Synapse**
 
-  Research projects often generate multiple tables with identical schemas across different cohorts or time periods. Consolidating these tables for unified analysis requires understanding Synapse's current capabilities and available workarounds.
-question: "Dr. Parker, a project manager for a multi-cohort study, has access to 7 tables with identical columns for these different cohorts. Each site has specific access to/is responsible for updating their respective table by adding new study participant records as participants are recruited, which they do once a month but at different times during the month. For sanity-preserving reporting, Dr. Parker wants to create a unified view to get up-to-date total participants and see demographic facets for the study across all sites. He asks for a quick consult the exact approach. How should you respond?"
+  Research projects often generate multiple tables with identical schemas across different cohorts or time periods. Consolidating these tables for unified analysis requires understanding Synapse's current capabilities.
+question: "Dr. Parker, a project manager for a multi-cohort study, has access to 7 tables where columns are identical or harmonizable for different cohorts from different sites. Each site has specific access to and is responsible for updating their respective table by adding new study participant records as participants are recruited, which they do once a month but at different times during the month. For sanity-preserving data exploration, Dr. Parker wants to create one unified view to get up-to-date total participants and some basic interactive facets for demographic variables of interest (check number of participants in dynamic age ranges, for example). He asks for a quick consult for an appropriate approach. How should you respond?"
 answers:
-  - text: "Suggest creating a materialized view with individual JOIN operations between all tables using a common identifier"
+  - text: "Suggest creating a materialized view with individual JOIN operations between all tables using a common identifier, defining the facets of interest via the usual schema configuration."
     correct: false
     message: "JOIN operations would create a wide table with repeated columns, not the row-wise combination that UNION provides. This doesn't solve the consolidation need."
     points: 0
-  - text: "Suggesting creating materialized view with the UNION operation."
-    correct: false
-    message: "This is the right track, but materialized views do not support UNIONs."
-    points: 0
+  - text: "Suggest creating materialized view with the UNION operation, while asking sites to have demographic attributes of interest configured as facets on their source tables, since the MV will inherit the facets."
+    correct: true
+    message: "Correct! Materialized views support UNIONs and work well for this use case. Note: It used to be that they did not."
+    points: 1
   - text: "Suggest that it is best to have a daily automated script to export each table as CSV, combine them manually outside of Synapse, and create a new table to upload back to Synapse"
     correct: false
-    message: "While this will work and was once the suggested workaround for when only materialized views existed (and MVs don't support UNIONs), there is now a better solution that is better -- since this requires manual updates when source tables change."
+    message: "While this will work and was once the suggested workaround for when materialized views didn't support UNIONs, there is now a better solution that 1) avoids manual updates when source tables change and 2) provides the desired interactive facets."
     points: 0
-  - text: "Suggest using a file view instead of tables to automatically consolidate the data"
+  - text: "Suggest using a file view instead of tables to automatically consolidate the data, defining the facets of interest via the usual schema configuration."
     correct: false
     message: "File views are for file metadata, not for consolidating table row data. This wouldn't address the need to combine table contents."
     points: 0
-  - text: "Suggesting creating separate queries for each table to sum participants and demographic features and combine numbers in the client application"
+  - text: "Suggest creating a virtual table with the UNION operation and specifying the desired facets in the defininng query."
     correct: false
-    message: "While possible, this isn't the best -- it puts the consolidation burden on every analysis and doesn't provide a single unified dataset that a user can query directly."
-    points: 0
-  - text: "Suggest creating a virtual table with the UNION operation."
-    correct: false
-    message: "Correct! Virtual tables is most likely what the PM wants. Released after materialized views, which don't support UNIONs, virtual tables can create the type of unified view described."
+    message: "Virtual tables don't support UNIONs, though they *can* be useful for aggregating data."
     points: 0
 allow_retry: true
 random_answer_order: false
