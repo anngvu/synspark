@@ -1,4 +1,5 @@
 type: "quiz"
+title: "Taylor's Email System Integration"
 level: "advanced"
 meta:
   source: "2025-01-27.txt"

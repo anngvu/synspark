@@ -1,4 +1,5 @@
 type: "quiz"
+title: "Sarah's Large Dataset Upload Strategy"
 level: "intermediate"
 meta:
   source: "2021-02-11.json"

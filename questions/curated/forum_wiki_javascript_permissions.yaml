@@ -1,4 +1,5 @@
 type: "quiz"
+title: "Interactive Dashboard Embedding Challenge"
 level: "intermediate"
 meta:
   source: "2021-04-26.json"

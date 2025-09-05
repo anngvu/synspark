@@ -1,4 +1,5 @@
 type: "quiz"
+title: "Dr. Martinez's Access Requirements Setup"
 level: "intermediate"
 meta:
   source: "https://rest-docs.synapse.org/rest/org/sagebionetworks/repo/model/AccessRequirement.html"

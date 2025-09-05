@@ -1,4 +1,5 @@
 type: "quiz"
+title: "Kevin's Project Data Migration"
 level: "advanced"
 meta:
   source: "2018-07-10.txt"
@@ -31,6 +32,7 @@ answers:
     points: 0
   - text: "Temporarily pause download access during the migration period, e.g. by setting permissions to View only, and use the `synapse migrate` utility from the cli."
     message: "Excellent! This describes the safe and nicest approach. See https://python-docs.synapse.org/en/stable/guides/data_storage/#storage-location-migration"
+    correct: true
     points: 2
 allow_retry: true
 random_answer_order: true
