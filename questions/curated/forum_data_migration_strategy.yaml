@@ -29,8 +29,8 @@ answers:
     correct: false
     message: "Direct S3-to-S3 transfer bypasses Synapse's file management system and wouldn't update Synapse's file handle references to point to the new location."
     points: 0
-  - text: "Use the `synapse migrate` command from the cli."
-    message: "Excellent! See https://python-docs.synapse.org/en/stable/guides/data_storage/#storage-location-migration"
+  - text: "Temporarily pause download access during the migration period, e.g. by setting permissions to View only, and use the `synapse migrate` utility from the cli."
+    message: "Excellent! This describes the safe and nicest approach. See https://python-docs.synapse.org/en/stable/guides/data_storage/#storage-location-migration"
     points: 2
 allow_retry: true
 random_answer_order: true
