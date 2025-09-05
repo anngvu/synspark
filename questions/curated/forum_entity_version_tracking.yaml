@@ -10,12 +10,12 @@ meta:
 context: |
   **Entity Version Management and Deleted Version Tracking**
 
-  The Synapse backend maintains version history for entities, including information about deleted versions. Understanding current capabilities to return version information is important for data provenance and audit purposes.
-question: "Dr. Kim, a data steward, needs to audit the complete version history of a critical dataset entity, including any versions that may have been deleted. They want to distinguish between active and deleted versions for compliance reporting. What's the most effective approach to retrieve this comprehensive version information?"
+  Some entities can be versioned and have a version history. Understanding current capabilities to return version information is important for data provenance and audit purposes.
+question: "Dr. Kim, a data steward, needs to audit the complete version history of a critical dataset entity, including any versions that may have been deleted. They want to retrieve active and deleted versions for compliance reporting. What's the most effective approach to retrieve this comprehensive version information?"
 answers:
   - text: "Use syn.getEntityVersions() which returns both active and deleted versions with status indicators"
     correct: false
-    message: "While getEntityVersions() exists, it doesn't actually return status information about deleted versions, because the underlying service used don't return deleted version info."
+    message: "While getEntityVersions() exists, it doesn't actually return status information about deleted versions."
     points: 0
   - text: "Use the REST API GET /entity/{id}/version endpoint to retrieve complete version metadata including deletion status."
     correct: false
@@ -29,9 +29,9 @@ answers:
     correct: false
     message: "Provenance tracks data lineage and workflows, not the entity's version status. Version information requires direct entity version APIs."
     points: 0
-  - text: "There is no currently no service that exposes deleted version info for Dr. Kim to use directly. If this is critical, ask the backend engineers for the backend lookup."
+  - text: "There is no currently no service that exposes deleted version info for Dr. Kim to use directly. If this is critical, ask the backend engineers for help."
     correct: true
-    message: "Correct! In the UI, deleted versions don't show up. This is because the entity version service doesn't return deleted versions, and no known method exists that can be used by a regular user."
+    message: "Correct! In the UI, deleted versions don't show up. This is because the entity version service doesn't return deleted versions, and no known method exists for a regular user."
     points: 1
 allow_retry: true
 random_answer_order: true
