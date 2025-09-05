@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SynSpark Self-Assessment Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .question-counter {
+            font-weight: bold;
+            color: #6c757d;
+        }
+
+        .score {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .question-card {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            background: #fff;
+        }
+
+        .question-level {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .level-intermediate {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .level-beginner {
+            background: #28a745;
+            color: #fff;
+        }
+
+        .level-advanced {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .context {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 4px solid #007bff;
+        }
+
+        .context h4 {
+            margin-bottom: 10px;
+            color: #495057;
+        }
+
+        .question {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .answers {
+            list-style: none;
+        }
+
+        .answer-item {
+            margin-bottom: 10px;
+        }
+
+        .answer-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .answer-label:hover {
+            border-color: #007bff;
+            background-color: #f8f9fa;
+        }
+
+        .answer-input {
+            margin-right: 12px;
+            margin-top: 2px;
+        }
+
+        .answer-text {
+            flex: 1;
+            line-height: 1.5;
+        }
+
+        .answer-correct {
+            border-color: #28a745;
+            background-color: #d4edda;
+        }
+
+        .answer-incorrect {
+            border-color: #dc3545;
+            background-color: #f8d7da;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .results {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .results h2 {
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .final-score {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .completion-stats {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: #6c757d;
+        }
+
+        .badge-section {
+            margin: 25px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #2196f3;
+        }
+
+        .badge-achievement h3 {
+            color: #1976d2;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .badge-achievement p {
+            margin-bottom: 20px;
+            color: #424242;
+            font-size: 16px;
+        }
+
+        .badge-preview {
+            margin: 20px 0;
+        }
+
+        .badge-image {
+            max-width: 200px;
+            max-height: 200px;
+        }
+
+        .badge-description {
+            font-size: 14px;
+            color: #666;
+            margin-top: 15px;
+        }
+
+        .github-contribution {
+            margin: 25px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .github-contribution p {
+            margin-bottom: 15px;
+            color: #495057;
+        }
+
+        .details-toggle {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .details-section {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        .details-section h3 {
+            margin-bottom: 15px;
+            color: #495057;
+        }
+
+        .scoring-info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+
+        .scoring-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .scoring-info li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .question-breakdown-item {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .question-breakdown-item.correct {
+            border-left: 4px solid #28a745;
+        }
+
+        .question-breakdown-item.incorrect {
+            border-left: 4px solid #dc3545;
+        }
+
+        .question-breakdown-item.unanswered {
+            border-left: 4px solid #6c757d;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #6c757d;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .multiple-choice-hint {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .question-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+        }
+
+        .question-item {
+            padding: 10px;
+            border-bottom: 1px solid #f1f3f4;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .question-item.current {
+            background-color: #e3f2fd;
+            font-weight: bold;
+        }
+
+        .question-title {
+            flex: 1;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            margin-right: 10px;
+        }
+
+        .question-status {
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .status-answered {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-current {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+
+        .status-unanswered {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SynSpark Self-Assessment Quiz</h1>
+        
+        <div id="loading" class="loading">
+            <p>Loading questions...</p>
+        </div>
+
+        <div id="error" class="error" style="display: none;">
+            <p>Error loading questions. Please check if you're serving this from a web server.</p>
+        </div>
+
+        <div id="quiz" style="display: none;">
+            <div class="quiz-controls">
+                <div class="question-counter">
+                    Question <span id="currentQuestion">1</span> of <span id="totalQuestions">0</span>
+                </div>
+                <div class="score">
+                    Score: <span id="currentScore">0</span>/<span id="totalScore">0</span>
+                </div>
+                <div class="control-buttons">
+                    <button class="btn btn-secondary" onclick="showQuestionList()">Question List</button>
+                    <button class="btn btn-warning" onclick="exitQuiz()">Exit Quiz</button>
+                </div>
+            </div>
+
+            <div id="questionContainer"></div>
+
+            <div class="buttons">
+                <button id="submitBtn" class="btn btn-primary" onclick="submitAnswer()">Submit Answer</button>
+                <button id="nextBtn" class="btn btn-secondary" onclick="nextQuestion()" style="display: none;">Next Question</button>
+                <button id="retryBtn" class="btn btn-secondary" onclick="retryQuestion()" style="display: none;">Try Again</button>
+            </div>
+        </div>
+
+        <div id="questionListView" style="display: none;">
+            <h2>Question List</h2>
+            <div class="question-list" id="questionListContainer">
+            </div>
+            <div class="buttons">
+                <button class="btn btn-secondary" onclick="returnToQuiz()">Back to Current Question</button>
+            </div>
+        </div>
+
+        <div id="results" class="results" style="display: none;">
+            <h2 id="resultsTitle">Quiz Complete!</h2>
+            <div class="final-score">
+                Your Score: <span id="finalScore"></span> points out of <span id="finalTotal"></span> maximum points
+                (<span id="finalPercentage"></span>%)
+            </div>
+            <div id="completionStats" class="completion-stats">
+                Questions Answered: <span id="questionsAnswered"></span> of <span id="totalQuestionsCount"></span>
+            </div>
+            
+            <div id="badgeSection" class="badge-section" style="display: none;">
+                <div class="badge-achievement">
+                    <h3>🎉 Congratulations!</h3>
+                    <p>You've answered <span id="badgePercentage"></span>% of the questions and earned your SynSpark Action Potential badge!</p>
+                    <div class="badge-preview">
+                        <img src="synspark_action_potential.png" alt="SynSpark Action Potential Badge" class="badge-image">
+                    </div>
+                    <button class="btn btn-primary" onclick="downloadBadge()">📥 Download Badge</button>
+                    <p class="badge-description">Share your achievement with your network!</p>
+                </div>
+            </div>
+            
+            <div class="details-toggle">
+                <button class="btn btn-secondary" onclick="toggleDetails()">📊 Show Details</button>
+            </div>
+            
+            <div id="detailsSection" class="details-section" style="display: none;">
+                <h3>Detailed Results</h3>
+                <div id="questionBreakdown"></div>
+                <div class="scoring-info">
+                    <p><strong>How Scoring Works:</strong></p>
+                    <ul>
+                        <li>Each question has one or more correct answers with different point values</li>
+                        <li>You earn points only for the answer you select if it's correct</li>
+                        <li>Questions with multiple correct answers show hints and award points based on the specific answer chosen</li>
+                        <li>The maximum possible score assumes you picked the highest-value answer for every question</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="github-contribution">
+                <p>Want to contribute questions or improvements?</p>
+                <a href="https://github.com/anngvu/synspark" target="_blank" class="btn btn-secondary">
+                    🚀 Contribute on GitHub
+                </a>
+            </div>
+            <button class="btn btn-primary" onclick="restartQuiz()">Take Quiz Again</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+    <script src="quiz.js"></script>
+</body>
+</html>
