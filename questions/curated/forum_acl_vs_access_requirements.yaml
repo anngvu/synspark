@@ -6,31 +6,35 @@ meta:
   source_timestamps: ["2021-09-14 16:19:54", "2021-09-14 16:50:41"]
   key_concepts: ["access control lists", "access requirements", "permissions", "data governance"]
   updated_approach: false
-  multiple_correct: false
+  multiple_correct: true
 
 context: |
-  **Understanding ACLs vs Access Requirements in Synapse**
+  **Understanding ACLs and Access Requirements in Synapse**
   
-  Synapse uses two distinct mechanisms to control data access: Access Control Lists (ACLs) and Access Requirements (ARs). These work independently and serve different purposes in data governance, which can sometimes cause confusion when troubleshooting access issues.
+  Synapse uses two distinct mechanisms to control data access: Access Control Lists (ACLs) and Access Requirements (ARs). How these work can often cause confusion when troubleshooting access issues.
 
-question: "Maya, a researcher with admin access to her project, is confused because she can't access some files that her team members uploaded. Within the same project, she can download some files but gets 'access denied' errors for others. The files she can't access all have Access Requirements that were applied when the dataset was publicly released, while the accessible ones don't have any Access Requirements. What's most likely preventing Maya from accessing these files despite her admin permissions?"
+question: "Maya, a researcher with admin access to her project, is confused because she can't access some files that her team members uploaded (and because it is a large project, there is nearly 100 folders and thousands of files). Within the same project, she can download some files but gets 'access denied' errors for others. Some files that she can't access have Access Requirements, which were applied when the dataset was publicly released. Inexplicably, other inaccessible files *don't* have Access Requirements. What can explain Maya being unable to access these files despite her admin permissions on the project?"
 
 answers:
-  - text: "Admin permissions should override all access restrictions - this is likely a system bug"
+  - text: "There is likely a system bug with Maya's project admin access since it should give her global access to all of the project and override all access restrictions"
     correct: false
-    message: "Admin permissions don't automatically bypass Access Requirements. ARs are a separate governance layer that applies even to users with admin ACL permissions."
+    message: "Admin permissions don't automatically bypass Access Requirements. ARs are a separate governance layer that applies even to users with admin ACL permissions. Also, look into new ACLs created with local sharing settings."
     points: 0
   - text: "Maya hasn't completed the Access Requirements approval process for the publicly released dataset"
     correct: true
-    message: "Correct! Access Requirements operate independently from ACL permissions. Even with admin access, Maya must still fulfill the Access Requirements (like signing agreements, providing justification, etc.) that were applied when the dataset was released."
+    message: "Correct even if inconvenient! Access Requirements operate independently from ACL permissions. Even with admin access, Maya must still fulfill the Access Requirements (like signing agreements, providing justification, etc.) that were applied when the dataset was released."
     points: 1
-  - text: "The files with Access Requirements are corrupted or have different storage permissions"
+  - text: "The files that Maya can't access, whether having Access Requirements or not, are corrupted or have different storage permissions"
     correct: false
-    message: "This isn't a storage or file integrity issue. Access Requirements are a governance mechanism that requires separate approval regardless of ACL permissions."
+    message: "This isn't a storage or file integrity issue."
     points: 0
-  - text: "Maya's admin permissions expired and need to be renewed by the project owner"
+  - text: "There are folders or files with local sharing settings where Maya has no download access."
+    correct: true
+    message: "Yes, local sharing settings create and apply new Access Control Lists. Since the local ACL replaces the higher-level project ACL where Maya is admin, this explains Maya's inability to access the files with no ARs."
+    points: 1 
+  - text: "Maya's admin permissions has expired and need to be renewed by the project creator"
     correct: false
-    message: "If Maya's admin permissions had expired, she wouldn't be able to access any files in the project. The issue is specifically with Access Requirements, not ACL permissions."
+    message: "If Maya's admin permissions had expired, she wouldn't be able to access any files in the project at all. The issue relates to nuances in Access Requirements and ACL permissions."
     points: 0
 
 allow_retry: true
