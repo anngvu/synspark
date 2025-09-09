@@ -84,8 +84,9 @@ class Quiz {
             this.questionStates = new Array(this.questions.length).fill('unanswered');
             this.questionResults = new Array(this.questions.length).fill(null);
 
-            this.showQuiz();
-            this.displayQuestion();
+            // Don't auto-start the quiz - wait for user to click start button
+            // this.showQuiz(); 
+            // this.displayQuestion();
         } catch (error) {
             console.error('Error loading questions:', error);
             this.showError();
@@ -405,10 +406,16 @@ class Quiz {
         // Confirm exit if questions have been answered
         const answeredCount = this.questionStates.filter(state => state === 'answered').length;
         if (answeredCount > 0) {
-            const confirmed = confirm(`You've answered ${answeredCount} questions. Are you sure you want to exit and see your results?`);
-            if (!confirmed) return;
+            const choice = confirm(`You've answered ${answeredCount} questions. Click OK to see your results, or Cancel to return to the home page.`);
+            if (choice) {
+                this.showResults(false);
+            } else {
+                returnToLanding();
+            }
+        } else {
+            // No questions answered, just return to landing
+            returnToLanding();
         }
-        this.showResults(false);
     }
 
     populateQuestionBreakdown() {
@@ -499,8 +506,166 @@ function downloadBadge() {
     document.body.removeChild(link);
 }
 
-// Initialize quiz when page loads
+// Landing page function
+async function startQuiz() {
+    document.getElementById('landingPage').style.display = 'none';
+    document.getElementById('quizInterface').style.display = 'block';
+    
+    if (!quiz) {
+        quiz = new Quiz();
+        await quiz.loadQuestions();
+        // After questions are loaded, show the quiz
+        quiz.showQuiz();
+        quiz.displayQuestion();
+    } else {
+        // If quiz already exists, just show it
+        quiz.showQuiz();
+        quiz.displayQuestion();
+    }
+}
+
+// Return to landing page function
+function returnToLanding() {
+    document.getElementById('quizInterface').style.display = 'none';
+    document.getElementById('landingPage').style.display = 'block';
+}
+
+// Function to load questions for chart analysis only
+async function loadQuestionsForChart() {
+    const questionFiles = [
+        'questions/curated/confluence_maya_ar_bypass_followup.yaml',
+        'questions/curated/forum_platform_positioning.yaml',
+        'questions/curated/forum_open_data_vs_public_access.yaml',
+        'questions/curated/forum_messaging_reliability.yaml',
+        'questions/curated/forum_materialized_view_union.yaml',
+        'questions/curated/forum_large_table_validation_timing.yaml',
+        'questions/curated/forum_globus_integration_strategy.yaml',
+        'questions/curated/forum_file_view_eventual_consistency.yaml',
+        'questions/curated/forum_file_preview_permissions.yaml',
+        'questions/curated/forum_file_metadata_change.yaml',
+        'questions/curated/forum_file_metadata_access.yaml',
+        'questions/curated/forum_entity_version_tracking.yaml',
+        'questions/curated/forum_email_integration_requirements.yaml',
+        'questions/curated/forum_dataset_folder_management.yaml',
+        'questions/curated/forum_data_warehouse_user_analysis.yaml',
+        'questions/curated/forum_data_transfer_costs.yaml',
+        'questions/curated/forum_column_model_reuse.yaml',
+        'questions/curated/forum_data_migration_strategy.yaml',
+        'questions/curated/forum_bulk_upload_timeouts.yaml',
+        'questions/curated/forum_ar_types_comparison.yaml',
+        'questions/curated/forum_api_rate_limiting.yaml',
+        'questions/curated/forum_acl_vs_access_requirements.yaml',
+        'questions/curated/forum_access_status_annotation.yaml',
+        'questions/curated/other_data_processing.yaml',
+        'questions/curated/forum_wiki_javascript_permissions.yaml',
+        'questions/curated/forum_user_access_management.yaml',
+        'questions/curated/forum_upload_performance_optimization.yaml',
+        'questions/curated/forum_timestamp_format_requirements.yaml',
+        'questions/curated/forum_team_privacy_challenges.yaml',
+        'questions/curated/forum_sql_joins_limitations.yaml',
+        'questions/curated/forum_s3_to_synapse_migration.yaml',
+        'questions/curated/forum_s3_direct_access_setup.yaml'
+    ];
+
+    const loadPromises = questionFiles.map(async (file) => {
+        try {
+            const response = await fetch(file);
+            if (response.ok) {
+                const yamlText = await response.text();
+                const question = jsyaml.load(yamlText);
+                if (question && question.type === 'quiz') {
+                    return question;
+                }
+            }
+        } catch (error) {
+            console.warn(`Failed to load ${file}:`, error);
+        }
+        return null;
+    });
+
+    const results = await Promise.all(loadPromises);
+    return results.filter(q => q !== null);
+}
+
+// Function to analyze questions and populate chart
+async function populateQuestionDistribution() {
+    try {
+        console.log('Loading questions for chart...');
+        const questions = await loadQuestionsForChart();
+        console.log(`Loaded ${questions.length} questions`);
+        
+        if (questions.length === 0) {
+            throw new Error('No questions loaded');
+        }
+        
+        // Count difficulty levels
+        const counts = {
+            beginner: 0,
+            intermediate: 0,
+            advanced: 0
+        };
+        
+        questions.forEach(question => {
+            let level = question.level || 'intermediate';
+            // Treat intermediate-advanced as advanced
+            if (level === 'intermediate-advanced') {
+                level = 'advanced';
+            }
+            if (counts.hasOwnProperty(level)) {
+                counts[level]++;
+            } else {
+                counts.intermediate++; // default fallback
+            }
+        });
+        
+        const total = questions.length;
+        
+        // Calculate percentages
+        const percentages = {
+            beginner: Math.round((counts.beginner / total) * 100),
+            intermediate: Math.round((counts.intermediate / total) * 100),
+            advanced: Math.round((counts.advanced / total) * 100)
+        };
+        
+        // Create chart HTML
+        const maxCount = Math.max(counts.beginner, counts.intermediate, counts.advanced);
+        const chartHTML = `
+            <div class="chart-bar">
+                <div class="bar-fill bar-beginner" style="height: ${(counts.beginner / maxCount) * 120}px;"></div>
+                <div class="bar-label">Beginner</div>
+                <div class="bar-count">${counts.beginner} questions (${percentages.beginner}%)</div>
+            </div>
+            <div class="chart-bar">
+                <div class="bar-fill bar-intermediate" style="height: ${(counts.intermediate / maxCount) * 120}px;"></div>
+                <div class="bar-label">Intermediate</div>
+                <div class="bar-count">${counts.intermediate} questions (${percentages.intermediate}%)</div>
+            </div>
+            <div class="chart-bar">
+                <div class="bar-fill bar-advanced" style="height: ${(counts.advanced / maxCount) * 120}px;"></div>
+                <div class="bar-label">Advanced</div>
+                <div class="bar-count">${counts.advanced} questions (${percentages.advanced}%)</div>
+            </div>
+        `;
+        
+        // Update chart
+        document.getElementById('difficultyChart').innerHTML = chartHTML;
+        
+        // Clear summary - keep chart clean
+        document.getElementById('questionSummary').innerHTML = '';
+            
+        console.log('Chart updated successfully:', counts);
+            
+    } catch (error) {
+        console.error('Error loading question distribution:', error);
+        document.getElementById('difficultyChart').innerHTML = 
+            '<div class="loading-chart">Unable to load question distribution</div>';
+        document.getElementById('questionSummary').innerHTML = 
+            '<strong>Questions available</strong> covering data storage, access control, APIs, and advanced platform features';
+    }
+}
+
+// Initialize page when loaded (show landing page and populate chart)
 document.addEventListener('DOMContentLoaded', () => {
-    quiz = new Quiz();
-    quiz.loadQuestions();
+    // Landing page is shown by default, quiz will be initialized when user clicks start
+    populateQuestionDistribution();
 });
