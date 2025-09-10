@@ -28,7 +28,7 @@ answers:
     points: 2
   - text: "Contact original data contributors to provide MD5 checksums for their uploads"
     correct: true
-    message: "This is actually not a bad approach if MD5 checksums exist. However, MD5 checksums from contributors may not exist, be available (even if they exist), or be reliable. But it might be more problematic for large collections and creates dependencies on external parties, which is why there is another correct answer with higher points."
+    message: "This is actually not a bad approach if MD5 checksums exist. However, MD5 checksums from contributors may not exist, be available (even if they exist), or be reliable. And it might be more problematic for large collections and creates dependencies on external parties, which is why there is another correct answer with higher points."
     points: 1
 allow_retry: true
 random_answer_order: true
