@@ -7,7 +7,7 @@ meta:
   source_date: "2018-10-29"
   source_timestamps: ["2018-10-29 18:12:55"]
   key_concepts: ["s3 migration", "external file handles", "md5 checksums", "etag limitations", "aws lambda", "multipart uploads"]
-  multiple_correct: false
+  multiple_correct: true
 context: |
   **S3-to-Synapse Data Migration Challenges**
 
@@ -25,10 +25,10 @@ answers:
   - text: "Use AWS Lambda to compute MD5 for files in-place, storing checksums in S3 custom metadata"
     correct: true
     message: "Correct! Lambda can stream S3 objects to compute MD5 without downloading, scales serverlessly for large batches, and can store results in S3 metadata for future reference."
-    points: 1
+    points: 2
   - text: "Contact original data contributors to provide MD5 checksums for their uploads"
-    correct: false
-    message: "MD5 checksums from contributors may not exist, be available, or be reliable. This approach doesn't scale for large collections and creates dependencies on external parties."
-    points: 0
+    correct: true
+    message: "This is actually not a bad approach if MD5 checksums exist. However, MD5 checksums from contributors may not exist, be available (even if they exist), or be reliable. But it might be more problematic for large collections and creates dependencies on external parties, which is why there is another correct answer with higher points."
+    points: 1
 allow_retry: true
 random_answer_order: true
