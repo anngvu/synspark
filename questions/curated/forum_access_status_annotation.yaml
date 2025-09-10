@@ -1,7 +1,7 @@
 type: "quiz"
 id: "emma_portal_access_annotation_strategy"
 title: "Emma's Portal Access Annotation Strategy"
-level: "intermediate-advanced"
+level: "advanced"
 meta:
   source: "2024-07-24.txt"
   source_date: "2024-07-24"
@@ -15,14 +15,22 @@ context: |
   
   Research portals need to help users understand which datasets are immediately accessible versus those requiring additional steps or still under embargo. Creating systematic annotations about access requirements enables better data discovery and filtering.
 
-question: "Emma, a portal owner, is thinking of features that can be on the roadmap for next year. She wants to enhance the portal by having files annotated with their access status (public without access requirements, public but restricted with requirements, not public) to enable better filtering on the portal. She proposes having a data manager use a 'naive' account with no special permissions to query access requirements weekly and add the appropriate annotation back to the files as an automated job. The portal currently has 293,856 files and continues to grow. What below actions make sense given the outcome desired?"
+question: "Emma, a portal owner, is thinking of features that can be on the roadmap for next year. She wants to enhance the portal by having files annotated with an easy-to-understand access status (public without access requirements, public but has access requirements) to enable better filtering on the portal. For example, some users expressed being able to to filter out controlled-access data during browsing. Emma is already thinking about getting access requirements info and adding the appropriate annotation back to the files, perhaps as a daily automated job. The portal currently has 293,856 files and continues to grow. What can make sense below given the outcome desired?"
 
 answers:
-  - text: "Recommend using the individual file entity GET /entity/{id}/actions/download endpoint for each file"
+  - text: "Recommend making authenticated requests using Emma's account to get file info to summarize using the endpoint `GET /entity/{id}/actions/download`"
     correct: false
-    message: "While this provides detailed per-file information, making 293,856+ individual API calls weekly would be inefficient and potentially impact system performance."
+    message: "It doesn't make sense to use Emma's account since the access info retrieved will not be representative or useful from the perspective of other users. Moreover, making 293,856+ individual API calls weekly would be inefficient and potentially impact system performance."
     points: 0
-  - text: "Recommend using table queries with includeActionsRequired parameter to batch process files and get summary information"
+  - text: "Recommend using the individual file entity GET /entity/{id}/actions/download endpoint for each file"
+    correct: true
+    message: "Correct! You can execute these as a non-authenticated user to get the access requirements from the perspective of anonymous users. This provides detailed access requirement information but requires many API calls."
+    points: 1
+  - text: "Recommend making unauthenticated requests to get file info to summarize using the endpoint `GET /entity/{id}/actions/download`"
+    correct: false
+    message: "While this provides detailed per-file information from the desired perspective, making 293,856+ individual API calls weekly would be inefficient and potentially impact system performance."
+    points: 0
+  - text: "Recommend using table queries with `includeActionsRequired` parameter to batch process files and get summary information"
     correct: true
     message: "Correct! Table queries can process multiple files efficiently and include actions required summary data, making it much more scalable for large datasets than individual file queries."
     points: 1
