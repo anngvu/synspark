@@ -1,0 +1,42 @@
+name: Validate Quiz Questions
+
+on:
+  push:
+    paths:
+      - 'questions/**/*.yaml'
+      - 'questions/**/*.yml'
+      - 'schema/question-schema.json'
+  pull_request:
+    paths:
+      - 'questions/**/*.yaml'
+      - 'questions/**/*.yml'
+      - 'schema/question-schema.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Install ajv-cli
+        run: npm install -g ajv-cli
+          
+      - name: Convert YAML to JSON and validate schema
+        run: |
+          echo "🔍 Converting YAML files to JSON and validating against schema..."
+          mkdir -p temp_json
+          for file in questions/curated/*.yaml; do
+            if [ -f "$file" ]; then
+              basename=$(basename "$file" .yaml)
+              yq eval '.' "$file" > "temp_json/${basename}.json"
+              echo "Validating $(basename "$file")..."
+              ajv validate -s schema/question-schema.json -d "temp_json/${basename}.json" --verbose
+            fi
+          done
+          
+      - name: Check dependencies with yq
+        run: |
+          echo "🔗 Checking question dependencies..."
+          bash scripts/check-dependencies.sh
