@@ -1,4 +1,5 @@
 type: "quiz"
+id: "sam_upload_performance_issue"
 title: "Sam's Upload Performance Issue"
 level: "beginner"
 meta:

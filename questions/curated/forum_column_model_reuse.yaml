@@ -1,4 +1,5 @@
 type: "quiz"
+id: "taylor_column_model_design"
 title: "Taylor's Column Model Design"
 level: "intermediate"
 meta:

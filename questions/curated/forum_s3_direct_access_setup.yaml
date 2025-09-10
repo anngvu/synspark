@@ -1,4 +1,5 @@
 type: "quiz"
+id: "morgan_direct_s3_access_setup"
 title: "Morgan's Direct S3 Access Setup"
 level: "intermediate-advanced"
 meta:

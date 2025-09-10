@@ -1,4 +1,5 @@
 type: "quiz"
+id: "jenny_email_delivery_investigation"
 title: "Jenny's Email Delivery Investigation"
 level: "advanced"
 meta:

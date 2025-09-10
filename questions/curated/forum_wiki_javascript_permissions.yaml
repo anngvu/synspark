@@ -1,4 +1,5 @@
 type: "quiz"
+id: "interactive_dashboard_embedding_challenge"
 title: "Interactive Dashboard Embedding Challenge"
 level: "intermediate"
 meta:

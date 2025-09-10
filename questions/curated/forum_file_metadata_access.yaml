@@ -1,4 +1,5 @@
 type: "quiz"
+id: "kara_file_size_check_strategy"
 title: "Kara's File Size Check Strategy"
 level: "intermediate"
 meta:

@@ -1,4 +1,5 @@
 type: "quiz"
+id: "sam_user_troubleshooting_challenge"
 title: "Sam's User Troubleshooting Challenge"
 level: "intermediate"
 meta:

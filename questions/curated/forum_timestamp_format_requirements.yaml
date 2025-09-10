@@ -1,4 +1,5 @@
 type: "quiz"
+id: "casey_date_formatting_challenge"
 title: "Casey's Date Formatting Challenge"
 level: "beginner"
 meta:

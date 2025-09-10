@@ -1,4 +1,5 @@
 type: "quiz"
+id: "oliver_api_rate_limiting_challenge"
 title: "Oliver's API Rate Limiting Challenge"
 level: "intermediate"
 meta:
