@@ -12,6 +12,14 @@ class Quiz {
         
     }
 
+    getBadgeRequirement() {
+        return Math.ceil(this.questions.length * 0.8);
+    }
+
+    qualifiesForBadge(answeredCount) {
+        return answeredCount >= this.getBadgeRequirement();
+    }
+
     async loadQuestions() {
         try {
             const questionFiles = [
@@ -208,7 +216,7 @@ class Quiz {
         document.getElementById('quiz').style.display = 'block';
         
         document.getElementById('totalQuestions').textContent = this.questions.length;
-        document.getElementById('totalScore').textContent = this.totalPossibleScore;
+        document.getElementById('badgeRequirement').textContent = this.getBadgeRequirement();
     }
 
     showError() {
@@ -222,7 +230,20 @@ class Quiz {
         
         // Update counters
         document.getElementById('currentQuestion').textContent = this.currentQuestionIndex + 1;
-        document.getElementById('currentScore').textContent = this.score;
+        // Update progress bar and counter
+        const answeredCount = this.questionStates.filter(state => state === 'answered').length;
+        const badgeRequirement = this.getBadgeRequirement();
+        
+        document.getElementById('questionsAnswered').textContent = answeredCount;
+        
+        // Update progress bar
+        const progressPercentage = (answeredCount / badgeRequirement) * 100;
+        const progressFill = document.getElementById('progressFill');
+        progressFill.style.width = Math.min(progressPercentage, 100) + '%';
+        
+        if (this.qualifiesForBadge(answeredCount)) {
+            progressFill.classList.add('badge-earned');
+        }
         
         // Reset state
         this.currentQuestionAnswered = false;
@@ -364,8 +385,20 @@ class Quiz {
             pointsEarned: isCorrect ? questionScore : 0
         };
         
-        // Update score display
-        document.getElementById('currentScore').textContent = this.score;
+        // Update progress bar and counter
+        const answeredCount = this.questionStates.filter(state => state === 'answered').length;
+        const badgeRequirement = this.getBadgeRequirement();
+        
+        document.getElementById('questionsAnswered').textContent = answeredCount;
+        
+        // Update progress bar
+        const progressPercentage = (answeredCount / badgeRequirement) * 100;
+        const progressFill = document.getElementById('progressFill');
+        progressFill.style.width = Math.min(progressPercentage, 100) + '%';
+        
+        if (this.qualifiesForBadge(answeredCount)) {
+            progressFill.classList.add('badge-earned');
+        }
         
         // Disable all inputs
         const inputs = document.querySelectorAll('.answer-input');
@@ -421,9 +454,9 @@ class Quiz {
         document.getElementById('questionsAnswered').textContent = answeredCount;
         document.getElementById('totalQuestionsCount').textContent = this.questions.length;
         
-        // Check if user qualifies for badge (80% of questions answered)
-        const completionPercentage = Math.round((answeredCount / this.questions.length) * 100);
-        if (completionPercentage >= 80) {
+        // Check if user qualifies for badge
+        if (this.qualifiesForBadge(answeredCount)) {
+            const completionPercentage = Math.round((answeredCount / this.questions.length) * 100);
             document.getElementById('badgeSection').style.display = 'block';
             document.getElementById('badgePercentage').textContent = completionPercentage;
         }

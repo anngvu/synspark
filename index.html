@@ -594,6 +594,38 @@
             color: #6c757d;
             font-size: 0.95em;
         }
+
+        .progress-section {
+            margin-bottom: 20px;
+            padding: 15px 0;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #007bff, #28a745);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-fill.badge-earned {
+            background: linear-gradient(90deg, #28a745, #20c997);
+        }
     </style>
 </head>
 <body>
@@ -662,12 +694,18 @@
                 <div class="question-counter">
                     Question <span id="currentQuestion">1</span> of <span id="totalQuestions">0</span>
                 </div>
-                <div class="score">
-                    Score: <span id="currentScore">0</span>/<span id="totalScore">0</span>
-                </div>
                 <div class="control-buttons">
                     <button class="btn btn-secondary" onclick="showQuestionList()">Question List</button>
-                    <button class="btn btn-warning" onclick="exitQuiz()">Exit Quiz</button>
+                    <button class="btn btn-warning" onclick="exitQuiz()">Exit</button>
+                </div>
+            </div>
+            
+            <div class="progress-section">
+                <div class="progress-label">
+                    Badge Progress: <span id="questionsAnswered">0</span> / <span id="badgeRequirement">0</span> answered
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
                 </div>
             </div>
 
