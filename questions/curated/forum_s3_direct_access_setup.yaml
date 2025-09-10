@@ -12,23 +12,23 @@ context: |
   **Direct S3 Access Options for Synapse Data**
 
   While Synapse provides client libraries for data access, computational biologists working with large datasets may need alternative access methods for specific use cases. Understanding when and how to use direct S3 access can optimize computational workflows.
-question: "Morgan, a computational biologist, needs to process 500GB of genomics data stored in Synapse for a machine learning pipeline running on AWS EC2. Instead of using the standard Synapse Python client, they're considering direct S3 access via AWS CLI with STS credentials. What's the primary advantage of this approach for their use case?"
+question: "Morgan, a computational biologist, is considering direct S3 access via STS credentials for processing 500GB of genomics data on AWS EC2. The project has sub-folders with local access controls for certain collaborating institutions. What are the key trade-offs they should evaluate before choosing this approach over the standard Synapse Python client?"
 answers:
-  - text: "Direct S3 access bypasses Synapse's access control and authentication requirements"
+  - text: "Direct S3 access via STS completely preserves Synapse's folder-level permissions and access controls, so there is not much of a tradeoff to eliminate the need to download 500GB locally for processing"
     correct: false
-    message: "STS credentials maintain Synapse's security model. Access control is preserved - you can only access data you have permissions for through Synapse."
+    message: "This is incorrect. STS tokens have a known permissions backdoor: they grant recursive access to all files within the authorized folder, even if sub-folders have more restrictive permissions for collaborating institutions. This is why STS features are used in very particular circumstances only."
     points: 0
-  - text: "It eliminates the need to download files locally, enabling compute directly on S3-hosted data"
+  - text: "STS tokens may compromise sub-folder access controls, but eliminate the need to download 500GB locally for processing"
     correct: true
-    message: "Correct! Direct S3 access allows compute operations (like AWS Batch, EMR, or EC2 processing) to work directly with data in S3 without downloading through Synapse client, saving time and storage costs for large datasets."
-    points: 1
-  - text: "AWS CLI provides better error handling and retry logic than Synapse clients"
+    message: "Correct! This captures the key trade-off: STS tokens have a permissions backdoor that grants recursive access to all files within authorized folders, potentially bypassing access controls for collaborating institutions' data. However, they enable compute directly on S3-hosted data without downloads, saving significant time and storage costs. This is why STS features are used in very particular circumstances only."
+    points: 2
+  - text: "Direct S3 access provides faster data transfer speeds compared to the Synapse Python client"
     correct: false
-    message: "Both AWS CLI and Synapse clients have robust error handling. The main advantage isn't about reliability but about computational efficiency for large-scale processing."
+    message: "Download speeds are similar since both ultimately access the same S3 infrastructure. The real benefit is avoiding downloads entirely when compute can happen directly on S3, but given the sub-folder access control issues with STS tokens, this approach should only be considered in very particular circumstances."
     points: 0
-  - text: "Direct access provides faster download speeds than the Synapse Python client"
+  - text: "The security risks are minimal since STS credentials expire automatically"
     correct: false
-    message: "Download speeds are similar since both ultimately access the same S3 infrastructure. The benefit is avoiding downloads entirely when compute can happen directly on S3."
+    message: "While STS credentials do expire, this doesn't address the permissions backdoor issue. During their validity period, STS tokens grant recursive access to all files in authorized folders, potentially exposing data from collaborating institutions with restricted sub-folder access. This is why STS is only recommended in very particular circumstances."
     points: 0
 details: |
   **When to Use Direct S3 Access with STS Credentials:**

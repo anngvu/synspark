@@ -14,7 +14,7 @@ context: |
   
   When performing large-scale operations like uploading thousands of files with annotations, users may encounter API rate limits designed to protect server resources. Understanding these limits and optimization strategies is crucial for efficient bulk data management.
 
-question: "Oliver, a data engineer, is using `synapse sync` to upload 30,000 small files with metadata annotations. His second batch runs much slower (180 kB/s vs 7 MB/s) with warnings about 'Requests are too frequent for API call /entity/#/bundle2. Allowed 240 requests every 60 seconds.' What's the most effective long-term solution to this performance issue?"
+question: "Oliver, a data engineer, is using `synapse sync` to upload 30,000 small files with metadata annotations. His second batch runs much slower (180 kB/s vs 7 MB/s) with warnings about 'Requests are too frequent for API call /entity/#/bundle2. Allowed 240 requests every 60 seconds.' What's the most practical long-term solution to this performance issue?"
 
 answers:
   - text: "Reduce the upload batch size and add delays between requests to stay under the rate limit"
@@ -31,7 +31,7 @@ answers:
     points: 0
   - text: "Request increased rate limits from Synapse support for the specific project"
     correct: false
-    message: "While this is possible and might be the correct path if there were indeed no existing alternative, a more efficient API that requires fewer requests *does* exist."
+    message: "While this is possible and might be the correct path if there were indeed no existing alternative, a more efficient API that requires fewer requests *does* exist and is more practical."
     points: 0
 
 allow_retry: true
