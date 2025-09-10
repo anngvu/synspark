@@ -18,7 +18,7 @@ answers:
     correct: false
     message: "While user-side filtering is possible, the pattern suggests a systematic issue rather than individual user configurations affecting specific message IDs."
     points: 0
-  - text: "There's an internal anti-spam mechanism in Synapse that may cache or limit similar message subjects"
+  - text: "There's an internal anti-spam mechanism in Synapse's messaging infrastructure that may cache or limit similar message subjects"
     correct: true
     message: "Correct! A 2025 discussion reveals that internal spam prevention logic can sometimes affect delivery based on subject patterns, even when the API returns success responses."
     points: 1
