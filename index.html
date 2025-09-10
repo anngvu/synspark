@@ -247,6 +247,26 @@
             color: #6c757d;
         }
 
+        .completion-stats-primary {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 5px solid #007bff;
+        }
+
+        .final-score-secondary {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #6c757d;
+            text-align: center;
+            padding: 10px;
+        }
+
         .badge-section {
             margin: 25px 0;
             padding: 25px;
@@ -729,12 +749,12 @@
 
         <div id="results" class="results" style="display: none;">
             <h2 id="resultsTitle">Quiz Complete!</h2>
-            <div class="final-score">
+            <div id="completionStats" class="completion-stats-primary">
+                Questions Answered: <span id="resultsQuestionsAnswered"></span> of <span id="totalQuestionsCount"></span>
+            </div>
+            <div class="final-score-secondary">
                 Your Score: <span id="finalScore"></span> points out of <span id="finalTotal"></span> maximum points
                 (<span id="finalPercentage"></span>%)
-            </div>
-            <div id="completionStats" class="completion-stats">
-                Questions Answered: <span id="questionsAnswered"></span> of <span id="totalQuestionsCount"></span>
             </div>
             
             <div id="badgeSection" class="badge-section" style="display: none;">

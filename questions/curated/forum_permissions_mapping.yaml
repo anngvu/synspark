@@ -1,0 +1,81 @@
+type: "quiz"
+id: "harry_permissions_mapping_confusion"
+title: "Harry's Permission Mapping Confusion"
+level: "intermediate"
+meta:
+  source: "2024-07-30.txt"
+  source_date: "2024-07-30"
+  key_concepts: ["permissions", "ACL", "access types", "programmatic access"]
+  multiple_correct: false
+
+context: |
+  **Programmatic Permission Management in Synapse**
+  
+  When automating Synapse project setup through a programmatic client, users can encounter discrepancies between the permission options available in the web interface and the `accessType` parameters in programmatic functions. The GUI shows permission levels like "Can View", "Can Edit", etc., while the API uses granular access types like READ, DOWNLOAD, UPDATE, etc.
+
+question: "Harry, a data manager, is writing an R script to automate study setup including assigning blanket permissions to user groups. He's confused because the `accessType` argument options in `synSetPermissions()` appear 'somewhat asymmetrical' compared to the permission levels he sees in the Synapse web GUI. For example, he sees 'Can Edit' in the GUI but needs to specify individual access types in his script. What does the 'Can Edit' permission level actually translate to in terms of access types?"
+
+answers:
+  - text: "[READ, DOWNLOAD, UPDATE]"
+    correct: false
+    message: "Close, but missing CREATE. The 'Can Edit' permission level includes CREATE access to allow users to add new content, not just modify existing content."
+    points: 0
+  - text: "[CREATE, READ, DOWNLOAD, UPDATE]"
+    correct: true
+    message: "Correct! According to PermissionLevelToAccessType.ts (source code for the web UI), CAN_EDIT maps to [CREATE, READ, DOWNLOAD, UPDATE]. This allows users to view content, download files, modify existing items, and create new content."
+    points: 1
+  - text: "[READ, UPDATE, CREATE, DELETE]"
+    correct: false
+    message: "This includes DELETE which is not part of 'Can Edit' - that would be 'Can Edit & Delete'. Also missing DOWNLOAD access which is included in most permission levels."
+    points: 0
+  - text: "There is no reliable mapping because GUI and API permissions use completely different systems"
+    correct: false
+    message: "While there's no automatic mapping function, the systems do correspond. The source code in ModelConstants.java, AclUtils.java, and PermissionLevelToAccessType.ts defines these mappings precisely."
+    points: 0
+
+details: |
+  **Complete Permission Level to Access Type Mappings:**
+
+  Understanding how GUI permission levels translate to programmatic access types is crucial for automation scripts:
+
+  **Entity Permissions:**
+  - **Can View**: `[READ]` - Basic viewing and metadata access
+  - **Can Download**: `[READ, DOWNLOAD]` - View + download files
+  - **Can Edit**: `[CREATE, READ, DOWNLOAD, UPDATE]` - All download rights + create and modify content
+  - **Can Edit & Delete**: `[CREATE, READ, DOWNLOAD, UPDATE, DELETE]` - Full content management
+  - **Administrator**: `[READ, DOWNLOAD, UPDATE, DELETE, CREATE, CHANGE_PERMISSIONS, CHANGE_SETTINGS, MODERATE]` - Full administrative control
+
+  **Programmatic Implementation:**
+
+  ```python
+  import synapseclient
+  
+  syn = synapseclient.Synapse()
+  syn.login()
+  
+  # Set "Can Edit" permissions
+  syn.setPermissions("syn12345", 
+                     principalId=123456, 
+                     accessType=['CREATE', 'READ', 'DOWNLOAD', 'UPDATE'])
+  
+  # Set Administrator permissions
+  syn.setPermissions("syn12345", 
+                     principalId=123456, 
+                     accessType=['READ', 'DOWNLOAD', 'UPDATE', 'DELETE', 
+                                'CREATE', 'CHANGE_PERMISSIONS', 
+                                'CHANGE_SETTINGS', 'MODERATE'])
+  
+  # Get current permissions for reference
+  acl = syn.getPermissions("syn12345")
+  print(acl)
+  ```
+
+  **Source Code Locations for Reference:**
+  - **Backend definitions**: `ModelConstants.java` in Synapse-Repository-Services
+  - **Web interface mappings**: `PermissionLevelToAccessType.ts` in synapse-web-monorepo
+  - **GWT implementation**: `AclUtils.java` for legacy web components
+
+  These mappings are consistent across all Synapse clients and should be referenced when building automation scripts to ensure proper permission assignment.
+
+allow_retry: true
+random_answer_order: true
