@@ -15,22 +15,18 @@ context: |
   
   Research portals need to help users understand which datasets are immediately accessible versus those requiring additional steps or still under embargo. Creating systematic annotations about access requirements enables better data discovery and filtering.
 
-question: "Emma, a portal owner, is thinking of features that can be on the roadmap for next year. She wants to enhance the portal by having files annotated with an easy-to-understand access status (public without access requirements, public but has access requirements) to enable better filtering on the portal. For example, some users expressed being able to to filter out controlled-access data during browsing. Emma is already thinking about getting access requirements info and adding the appropriate annotation back to the files, perhaps as a daily automated job. The portal currently has 293,856 files and continues to grow. What can make sense below given the outcome desired?"
+question: "Emma, a portal owner, is thinking of features that can be on the roadmap for next year. She wants to enhance the portal by having files annotated with an easy-to-understand access status (public without access requirements, public but has access requirements) to enable better filtering on the portal. For example, some users expressed being able to to filter out controlled-access data during browsing. Emma is already thinking about getting access requirements info and adding the appropriate annotation back to the files, perhaps as a daily automated job. The portal currently has 293,856 files and continues to grow. What solution makes sense given the outcome desired?"
 
 answers:
   - text: "Recommend making authenticated requests using Emma's account to get file info to summarize using the endpoint `GET /entity/{id}/actions/download`"
     correct: false
     message: "It doesn't make sense to use Emma's account since the access info retrieved will not be representative or useful from the perspective of other users. Moreover, making 293,856+ individual API calls weekly would be inefficient and potentially impact system performance."
     points: 0
-  - text: "Recommend using the individual file entity GET /entity/{id}/actions/download endpoint for each file"
-    correct: true
-    message: "Correct! You can execute these as a non-authenticated user to get the access requirements from the perspective of anonymous users. This provides detailed access requirement information but requires many API calls."
-    points: 1
   - text: "Recommend making unauthenticated requests to get file info to summarize using the endpoint `GET /entity/{id}/actions/download`"
     correct: false
-    message: "While this provides detailed per-file information from the desired perspective, making 293,856+ individual API calls weekly would be inefficient and potentially impact system performance."
+    message: "This is somewhat correct in that unauthenticated requests can return the requirements needed from a neutral perspective. However, making 293,856+ individual API calls weekly would still be inefficient and potentially impact system performance."
     points: 0
-  - text: "Recommend using table queries with `includeActionsRequired` parameter to batch process files and get summary information"
+  - text: "Recommend using table queries via REST API with `includeActionsRequired` parameter to batch process files and derive the desired summary status"
     correct: true
     message: "Correct! Table queries can process multiple files efficiently and include actions required summary data, making it much more scalable for large datasets than individual file queries."
     points: 1
@@ -49,3 +45,16 @@ answers:
 
 allow_retry: true
 random_answer_order: true
+
+enhancement: "Table queries support actionsRequired via partsMask parameter (0x200) when query.selectFileColumn is specified. This returns 'the list of actions required to download any file that appears in the query' per the Synapse REST API documentation."
+
+details: |
+  **Technical Implementation Details:**
+  
+  For the table query approach, the implementation would use:
+  - REST API endpoint: `POST /entity/{id}/table/query/async/start`
+  - partsMask parameter: `0x200` (actionsRequired)
+  - Required: `query.selectFileColumn` must be specified
+  - Returns: List of actions required for file downloads in the query results
+  
+  This approach allows batch processing of file access requirements instead of individual `GET /entity/{id}/actions/download` calls, making it much more efficient for large datasets like Emma's 293,856+ files.
