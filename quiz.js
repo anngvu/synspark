@@ -1,3 +1,41 @@
+// Shared question files array
+const QUESTION_FILES = [
+    'questions/curated/confluence_maya_ar_bypass_followup.yaml',
+    'questions/curated/forum_platform_positioning.yaml',
+    'questions/curated/forum_open_data_vs_public_access.yaml',
+    'questions/curated/forum_messaging_reliability.yaml',
+    'questions/curated/forum_materialized_view_union.yaml',
+    'questions/curated/forum_large_table_validation_timing.yaml',
+    'questions/curated/forum_globus_integration_strategy.yaml',
+    'questions/curated/forum_file_view_eventual_consistency.yaml',
+    'questions/curated/forum_file_preview_permissions.yaml',
+    'questions/curated/forum_file_metadata_change.yaml',
+    'questions/curated/forum_file_metadata_access.yaml',
+    'questions/curated/forum_entity_version_tracking.yaml',
+    'questions/curated/forum_email_integration_requirements.yaml',
+    'questions/curated/forum_dataset_folder_management.yaml',
+    'questions/curated/forum_data_warehouse_user_analysis.yaml',
+    'questions/curated/forum_data_transfer_costs.yaml',
+    'questions/curated/forum_column_model_reuse.yaml',
+    'questions/curated/forum_data_migration_strategy.yaml',
+    'questions/curated/forum_bulk_upload_timeouts.yaml',
+    'questions/curated/forum_ar_types_comparison.yaml',
+    'questions/curated/forum_api_rate_limiting.yaml',
+    'questions/curated/forum_acl_vs_access_requirements.yaml',
+    'questions/curated/forum_access_status_annotation.yaml',
+    'questions/curated/other_data_processing.yaml',
+    'questions/curated/other_krista_table_folder_hierarchy.yaml',
+    'questions/curated/forum_wiki_javascript_permissions.yaml',
+    'questions/curated/forum_user_access_management.yaml',
+    'questions/curated/forum_upload_performance_optimization.yaml',
+    'questions/curated/forum_timestamp_format_requirements.yaml',
+    'questions/curated/forum_team_privacy_challenges.yaml',
+    'questions/curated/forum_sql_joins_limitations.yaml',
+    'questions/curated/forum_s3_to_synapse_migration.yaml',
+    'questions/curated/forum_s3_direct_access_setup.yaml',
+    'questions/curated/forum_permissions_mapping.yaml'
+];
+
 class Quiz {
     constructor() {
         this.questions = [];
@@ -22,43 +60,7 @@ class Quiz {
 
     async loadQuestions() {
         try {
-            const questionFiles = [
-                'questions/curated/confluence_maya_ar_bypass_followup.yaml',
-                'questions/curated/forum_platform_positioning.yaml',
-                'questions/curated/forum_open_data_vs_public_access.yaml',
-                'questions/curated/forum_messaging_reliability.yaml',
-                'questions/curated/forum_materialized_view_union.yaml',
-                'questions/curated/forum_large_table_validation_timing.yaml',
-                'questions/curated/forum_globus_integration_strategy.yaml',
-                'questions/curated/forum_file_view_eventual_consistency.yaml',
-                'questions/curated/forum_file_preview_permissions.yaml',
-                'questions/curated/forum_file_metadata_change.yaml',
-                'questions/curated/forum_file_metadata_access.yaml',
-                'questions/curated/forum_entity_version_tracking.yaml',
-                'questions/curated/forum_email_integration_requirements.yaml',
-                'questions/curated/forum_dataset_folder_management.yaml',
-                'questions/curated/forum_data_warehouse_user_analysis.yaml',
-                'questions/curated/forum_data_transfer_costs.yaml',
-                'questions/curated/forum_column_model_reuse.yaml',
-                'questions/curated/forum_data_migration_strategy.yaml',
-                'questions/curated/forum_bulk_upload_timeouts.yaml',
-                'questions/curated/forum_ar_types_comparison.yaml',
-                'questions/curated/forum_api_rate_limiting.yaml',
-                'questions/curated/forum_acl_vs_access_requirements.yaml',
-                'questions/curated/forum_access_status_annotation.yaml',
-                'questions/curated/other_data_processing.yaml',
-                'questions/curated/forum_wiki_javascript_permissions.yaml',
-                'questions/curated/forum_user_access_management.yaml',
-                'questions/curated/forum_upload_performance_optimization.yaml',
-                'questions/curated/forum_timestamp_format_requirements.yaml',
-                'questions/curated/forum_team_privacy_challenges.yaml',
-                'questions/curated/forum_sql_joins_limitations.yaml',
-                'questions/curated/forum_s3_to_synapse_migration.yaml',
-                'questions/curated/forum_s3_direct_access_setup.yaml',
-                'questions/curated/forum_permissions_mapping.yaml'
-            ];
-
-            const loadPromises = questionFiles.map(async (file) => {
+            const loadPromises = QUESTION_FILES.map(async (file) => {
                 try {
                     const response = await fetch(file);
                     if (response.ok) {
@@ -452,7 +454,7 @@ class Quiz {
         document.getElementById('finalScore').textContent = this.score;
         document.getElementById('finalTotal').textContent = this.totalPossibleScore;
         document.getElementById('finalPercentage').textContent = percentage;
-        document.getElementById('questionsAnswered').textContent = answeredCount;
+        document.getElementById('resultsQuestionsAnswered').textContent = answeredCount;
         document.getElementById('totalQuestionsCount').textContent = this.questions.length;
         
         // Check if user qualifies for badge
@@ -666,43 +668,7 @@ function returnToLanding() {
 
 // Function to load questions for chart analysis only
 async function loadQuestionsForChart() {
-    const questionFiles = [
-        'questions/curated/confluence_maya_ar_bypass_followup.yaml',
-        'questions/curated/forum_platform_positioning.yaml',
-        'questions/curated/forum_open_data_vs_public_access.yaml',
-        'questions/curated/forum_messaging_reliability.yaml',
-        'questions/curated/forum_materialized_view_union.yaml',
-        'questions/curated/forum_large_table_validation_timing.yaml',
-        'questions/curated/forum_globus_integration_strategy.yaml',
-        'questions/curated/forum_file_view_eventual_consistency.yaml',
-        'questions/curated/forum_file_preview_permissions.yaml',
-        'questions/curated/forum_file_metadata_change.yaml',
-        'questions/curated/forum_file_metadata_access.yaml',
-        'questions/curated/forum_entity_version_tracking.yaml',
-        'questions/curated/forum_email_integration_requirements.yaml',
-        'questions/curated/forum_dataset_folder_management.yaml',
-        'questions/curated/forum_data_warehouse_user_analysis.yaml',
-        'questions/curated/forum_data_transfer_costs.yaml',
-        'questions/curated/forum_column_model_reuse.yaml',
-        'questions/curated/forum_data_migration_strategy.yaml',
-        'questions/curated/forum_bulk_upload_timeouts.yaml',
-        'questions/curated/forum_ar_types_comparison.yaml',
-        'questions/curated/forum_api_rate_limiting.yaml',
-        'questions/curated/forum_acl_vs_access_requirements.yaml',
-        'questions/curated/forum_access_status_annotation.yaml',
-        'questions/curated/other_data_processing.yaml',
-        'questions/curated/forum_wiki_javascript_permissions.yaml',
-        'questions/curated/forum_user_access_management.yaml',
-        'questions/curated/forum_upload_performance_optimization.yaml',
-        'questions/curated/forum_timestamp_format_requirements.yaml',
-        'questions/curated/forum_team_privacy_challenges.yaml',
-        'questions/curated/forum_sql_joins_limitations.yaml',
-        'questions/curated/forum_s3_to_synapse_migration.yaml',
-        'questions/curated/forum_s3_direct_access_setup.yaml',
-        'questions/curated/forum_permissions_mapping.yaml'
-    ];
-
-    const loadPromises = questionFiles.map(async (file) => {
+    const loadPromises = QUESTION_FILES.map(async (file) => {
         try {
             const response = await fetch(file);
             if (response.ok) {
