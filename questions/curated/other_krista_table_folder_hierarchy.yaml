@@ -1,0 +1,46 @@
+type: "quiz"
+id: "krista_table_folder_parent_hierarchy"
+title: "Krista's Table Organization Discovery"
+level: "advanced"
+meta:
+  custom: true
+  multiple_correct: false
+  easter_egg: true
+
+context: |
+  **Synapse Project Organization**
+  
+  When working with Synapse projects, users typically organize their data using folders, files, and tables. The web interface provides different views for accessing these various entity types within a project.
+
+question: |
+  "Krista is working on a collaborative research project that already has over 50 tables, which is overwhelming when viewing the 'Tables' tab. She's developing several experimental tables and notices that in the Synapse web UI, all tables appear directly under the project in the 'Tables' tab, making her work-in-progress tables visible to all project members alongside the existing tables.
+  
+  Using the Python client, Krista tries reorganizing by moving a table, setting a folder as the parent id to reference a folder entity. What happens when she does this?"
+
+answers:
+  - text: "The operation fails because tables can only have projects as parents in Synapse."
+    correct: false
+    message: "Not true! Synapse's API allows more flexibility in parent-child relationships than this. Try it yourself with the Python client to see what actually happens!"
+    points: 0
+  - text: "The table appears in both the folder and the project's Tables tab in the web UI."
+    correct: false
+    message: "The Tables tab only shows tables that have the project as their direct parent. Give it a try with the Python client and see where the table ends up!"
+    points: 0
+  - text: "The operation succeeds, but the table becomes inaccessible through the web UI."
+    correct: true
+    message: "Correct! The table will no longer appear in the project's Tables tab since that only shows tables with the project as parent. Navigating to the folder in the web UI will only show files and other folders, not tables. The table is effectively 'hidden' from web UI users but remains accessible programmatically via the Python client or API."
+    points: 1
+  - text: "The operation succeeds and the table appears normally in the parent folder alongside files."
+    correct: false
+    message: "Tables don't appear in folder views in the web UI - folders only display files and other folders. Try this technique yourself with the Python client!"
+    points: 0
+  - text: "The table moves to the folder but loses all its data and annotations."
+    correct: false
+    message: "Moving a table to a different parent doesn't affect its data or metadata. You can test this safely with the Python client yourself!"
+    points: 0
+
+details: |
+  This question highlights two key learning objectives: (1) Synapse's entity hierarchy is more flexible than the web UI suggests - tables can technically have folders as parents via the API, and (2) this creates a practical "hiding" effect since the web UI only shows tables with project parents in the Tables tab, while folder navigation only displays files and other folders.
+
+allow_retry: true
+random_answer_order: false
