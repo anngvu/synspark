@@ -1,7 +1,7 @@
 type: "quiz"
 id: "marcus_globus_transfer_integration"
 title: "Marcus's Globus Transfer Integration"
-level: "intermediate-advanced"
+level: "advanced"
 meta:
   source: "2022-07-20.txt"
   source_date: "2022-07-20"
@@ -16,7 +16,7 @@ question: "Marcus, a research data engineer, needs to enable large-scale contrib
 answers:
   - text: "Configure Globus to transfer directly to Synapse's default storage bucket"
     correct: false
-    message: "Globus is currently NOT integrated with Synapse's API or storage systems. Direct transfers to Synapse storage aren't supported."
+    message: "Globus is currently NOT integrated with Synapse's API or storage systems. Direct transfers to Synapse storage aren't supported. But you can potentially make this answer correct by advocating for the feature request."
     points: 0
   - text: "Set up a custom S3 bucket with Globus S3 connector, then programmatically index the files in Synapse"
     correct: true
