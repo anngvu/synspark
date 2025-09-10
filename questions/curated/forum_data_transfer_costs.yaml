@@ -35,5 +35,9 @@ answers:
     correct: false
     message: "File compression doesn't address the root cause of excessive download volume. If users need the data, they'll still download the compressed files."
     points: 0
+  - text: "Migrate data to AWS S3 with regional egress restrictions, requiring users to access from the same region"
+    correct: true
+    message: "Correct! Regional S3 buckets with same-region access requirements eliminate egress costs, though users must download from VMs in the same region (e.g., EC2 in us-east-1)."
+    points: 1
 allow_retry: true
 random_answer_order: false
