@@ -13,13 +13,13 @@ context: |
   **Using the Right Tools for User Support and Analysis**
 
   Sagers should know when to use the web UI, R/Python clients, lower-level REST API, or the Snowflake data warehouse to best resolve an issue. 
-question: "Sam, a Sage support engineer, receives a ticket from a user who can't download data from a challenge project despite claiming to have the necessary access. The user's email is available but Sam needs to understand their team memberships to troubleshoot. What's the most efficient approach using available tools?"
+question: "Sam, a Sage support engineer, receives a ticket from a user who can't download data from a challenge project despite claiming to have the necessary access. Only the user's personal email is available (the user's Synapse ID is not captured in the support ticket). Sam needs to check the user's team memberships to troubleshoot. What's the most efficient approach using available tools?"
 answers:
   - text: "Ask the user to provide screenshots of their team memberships from their profile page"
     correct: false
     message: "While this might work, it's slower and relies on user cooperation. More direct technical approaches are available for support staff."
     points: 0
-  - text: "Query the data warehouse to find the user ID from email, then check their team memberships in TEAMMEMBER_LATEST table"
+  - text: "Query the Snowflake data warehouse to find the user ID from email, then check their team memberships in TEAMMEMBER_LATEST table"
     correct: true
     message: "Correct! Snowflake provides powerful tools for analyzing user issues that may not be immediately visible through the web interface or accessible through Synapse API services (user emails are confidential information!). Even when using Snowflake, the best approach, emails should not be shared externally unless approved by Tom and the governance team. Here are the useful queries for this particular scenario: first SELECT id FROM USERPROFILE_LATEST WHERE email='user@example.com', then SELECT * FROM TEAMMEMBER_LATEST WHERE member_id = [user_id] provides complete team membership analysis."
     points: 1
@@ -27,9 +27,9 @@ answers:
     correct: false
     message: "Project ACLs show permissions but don't reveal the underlying team membership structure needed to understand why access might be missing."
     points: 0
-  - text: "Use the Python client to programmatically retrieve the user's profile and team information"
+  - text: "Use the Python client or REST API to programmatically retrieve the user's profile with their email, and then use the returned user id in the profile info to retrieve team information"
     correct: false
-    message: "While possible, the data warehouse provides more comprehensive analysis capabilities and is a shorter path for this type of support investigation."
+    message: "Not quite. You can use GET /user/{id}/team to see which teams a user belongs to. However, you don't have their Synapse user id and you cannot get user id using their email through the client or REST API. You would have to followup to get their Synapse ID, making this less efficient. This would also be efficient if the ticket system included the user's Synapse ID automatically."
     points: 0
 allow_retry: true
 random_answer_order: true
