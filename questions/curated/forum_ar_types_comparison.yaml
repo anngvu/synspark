@@ -1,9 +1,11 @@
 type: "quiz"
+id: "dr_martinez_access_requirements_setup"
 title: "Dr. Martinez's Access Requirements Setup"
 level: "intermediate"
 meta:
   source: "https://rest-docs.synapse.org/rest/org/sagebionetworks/repo/model/AccessRequirement.html"
-  source_date: "2024"
+  source_date: "2025-09-05"
+  custom: true
   key_concepts: ["access requirements", "AR types", "self-signed", "ACT approved", "governance", "multiple ARs"]
   multiple_correct: false
 context: |

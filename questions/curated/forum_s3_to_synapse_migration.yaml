@@ -1,4 +1,5 @@
 type: "quiz"
+id: "alex_s3_migration_challenge"
 title: "Alex's S3 Migration Challenge"
 level: "advanced"
 meta:

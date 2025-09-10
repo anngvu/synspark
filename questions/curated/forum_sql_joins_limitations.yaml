@@ -1,4 +1,5 @@
 type: "quiz"
+id: "dr_wang_join_operation_limitations"
 title: "Dr. Wang's JOIN Operation Limitations"
 level: "intermediate"
 meta:

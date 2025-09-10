@@ -1,4 +1,5 @@
 type: "quiz"
+id: "file_view_indexing_lag_workaround"
 title: "File View Indexing Lag Workaround"
 level: "advanced"
 meta:

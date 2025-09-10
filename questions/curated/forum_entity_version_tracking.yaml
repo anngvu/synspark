@@ -1,4 +1,5 @@
 type: "quiz"
+id: "dr_kim_version_audit_challenge"
 title: "Dr. Kim's Version Audit Challenge"
 level: "intermediate-advanced"
 meta:
