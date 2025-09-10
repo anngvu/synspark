@@ -72,8 +72,8 @@ class Quiz {
                 throw new Error('No valid quiz questions found');
             }
 
-            // Shuffle questions
-            this.questions = this.shuffleArray(this.questions);
+            // Smart shuffle with constraints (starter questions first, dependencies respected)
+            this.questions = this.smartShuffle(this.questions);
             
             // Calculate total possible score
             this.totalPossibleScore = this.questions.reduce((total, question) => {
@@ -101,6 +101,106 @@ class Quiz {
         }
         return shuffled;
     }
+
+    smartShuffle(questions) {
+        // Create maps for easier lookup by ID
+        const questionMap = new Map();
+        questions.forEach(q => {
+            if (q.id) {
+                questionMap.set(q.id, q);
+            }
+        });
+
+        // Separate questions by type
+        const starterQuestions = questions.filter(q => q.starter === true);
+        const dependentQuestions = questions.filter(q => q.followup_to);
+        const regularQuestions = questions.filter(q => !q.starter && !q.followup_to);
+
+        // Build dependency map to track which questions need to come before others
+        const dependencyMap = new Map();
+        dependentQuestions.forEach(q => {
+            if (q.followup_to) {
+                const parentId = q.followup_to;
+                if (!dependencyMap.has(parentId)) {
+                    dependencyMap.set(parentId, []);
+                }
+                dependencyMap.get(parentId).push(q);
+            }
+        });
+
+        // Start with shuffled starter questions
+        const result = this.shuffleArray(starterQuestions);
+
+        // Process remaining questions, respecting dependencies
+        const processed = new Set();
+        const toProcess = [...regularQuestions];
+
+        // Add questions that have dependents to toProcess if they're not already there
+        dependencyMap.forEach((dependents, parentId) => {
+            const parent = questionMap.get(parentId);
+            if (parent && !starterQuestions.includes(parent)) {
+                if (!toProcess.includes(parent)) {
+                    toProcess.push(parent);
+                }
+            }
+        });
+
+        // Process questions while respecting dependencies
+        while (toProcess.length > 0) {
+            let addedAny = false;
+            
+            for (let i = toProcess.length - 1; i >= 0; i--) {
+                const question = toProcess[i];
+                
+                // Check if this question can be added (no unresolved dependencies)
+                let canAdd = true;
+                
+                // If this question is a followup, check if its parent is already processed
+                if (question.followup_to) {
+                    const parent = questionMap.get(question.followup_to);
+                    if (parent && !processed.has(parent)) {
+                        canAdd = false;
+                    }
+                }
+                
+                if (canAdd) {
+                    // Add this question
+                    result.push(question);
+                    processed.add(question);
+                    toProcess.splice(i, 1);
+                    addedAny = true;
+                    
+                    // Add any dependents of this question
+                    if (question.id && dependencyMap.has(question.id)) {
+                        const dependents = dependencyMap.get(question.id);
+                        dependents.forEach(dependent => {
+                            if (!processed.has(dependent) && !toProcess.includes(dependent)) {
+                                toProcess.push(dependent);
+                            }
+                        });
+                    }
+                }
+            }
+            
+            // If we couldn't add any questions, there might be a circular dependency
+            // or missing parent - just add remaining questions randomly
+            if (!addedAny && toProcess.length > 0) {
+                console.warn('Potential dependency issue, adding remaining questions randomly');
+                result.push(...this.shuffleArray(toProcess));
+                break;
+            }
+        }
+
+        console.log('Smart shuffle complete:', {
+            total: result.length,
+            starters: starterQuestions.length,
+            regular: regularQuestions.length,
+            dependent: dependentQuestions.length
+        });
+
+        return result;
+    }
+
 
     showQuiz() {
         document.getElementById('loading').style.display = 'none';

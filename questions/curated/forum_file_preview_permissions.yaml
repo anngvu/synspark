@@ -1,6 +1,8 @@
 type: "quiz"
+id: "jordan_file_preview_access_issue"
 title: "Jordan's File Preview Access Issue"
 level: "beginner"
+starter: true
 meta:
   source: "2017-11-15.txt"
   source_date: "2017-11-15"

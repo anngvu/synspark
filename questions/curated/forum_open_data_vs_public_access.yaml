@@ -1,6 +1,8 @@
 type: "quiz"
+id: "jordan_data_access_classification"
 title: "Jordan's Data Access Classification"
 level: "beginner"
+starter: true
 meta:
   source: "2024-07-24.txt"
   source_date: "2024-07-24"
