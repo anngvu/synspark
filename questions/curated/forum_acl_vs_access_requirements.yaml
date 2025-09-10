@@ -1,4 +1,5 @@
 type: "quiz"
+id: "maya_file_access_issues"
 title: "Maya's File Access Issues"
 level: "intermediate"
 meta:

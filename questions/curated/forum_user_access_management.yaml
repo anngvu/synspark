@@ -1,6 +1,8 @@
 type: "quiz"
+id: "patricia_user_access_management"
 title: "Patricia's User Access Management"
 level: "beginner"
+starter: true
 meta:
   source: "2020-05-14.txt"
   source_date: "2020-05-14"

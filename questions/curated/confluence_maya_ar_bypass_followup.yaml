@@ -1,12 +1,13 @@
 type: "quiz"
+id: "maya_data_access_followup"
 title: "Maya's Data Access Followup"
 level: "advanced"
+followup_to: "maya_file_access_issues"
 meta:
   source: "https://sagebionetworks.jira.com/wiki/spaces/GI/pages/2946695193/AR+Bypass+for+Data+Contributors"
   source_date: "2023-06-22"
   key_concepts: ["access requirements", "AR bypass", "data contributors", "ACL on AR", "admin permissions", "team access"]
   updated_approach: true
-  followup_to: "forum_acl_vs_access_requirements.yaml"
   multiple_correct: false
 context: |
   **Maya's Ongoing Access Challenge**
