@@ -1,6 +1,6 @@
 type: "quiz"
-id: "jordan_data_access_classification"
-title: "Jordan's Data Access Classification"
+id: "justin_data_access_classification"
+title: "Justin's Data Access Classification"
 level: "beginner"
 starter: true
 meta:
@@ -13,7 +13,7 @@ context: |
   **Understanding Access Level Classifications in Synapse**
 
   Synapse supports different levels of data access, and understanding the distinction between terms like "Open Data," "Public Access," and access requiring login is crucial for proper data classification and user expectations. These distinctions affect how users can discover and access data.
-question: "Jordan, a data manager, is setting up access levels for a new dataset and wants to ensure proper classification. They're confused about when to use different access designations. What's the key distinction between OPEN_DATA and PUBLIC access in Synapse?"
+question: "Justin, a data manager, is setting up access levels for a new dataset and wants to ensure proper classification. They're confused about when to use different access designations. What's the key distinction between OPEN_DATA and PUBLIC access in Synapse?"
 answers:
   - text: "OPEN_DATA requires Synapse user login while PUBLIC access allows anonymous downloads"
     correct: false
