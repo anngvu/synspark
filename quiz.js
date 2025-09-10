@@ -54,7 +54,8 @@ class Quiz {
                 'questions/curated/forum_team_privacy_challenges.yaml',
                 'questions/curated/forum_sql_joins_limitations.yaml',
                 'questions/curated/forum_s3_to_synapse_migration.yaml',
-                'questions/curated/forum_s3_direct_access_setup.yaml'
+                'questions/curated/forum_s3_direct_access_setup.yaml',
+                'questions/curated/forum_permissions_mapping.yaml'
             ];
 
             const loadPromises = questionFiles.map(async (file) => {
@@ -697,7 +698,8 @@ async function loadQuestionsForChart() {
         'questions/curated/forum_team_privacy_challenges.yaml',
         'questions/curated/forum_sql_joins_limitations.yaml',
         'questions/curated/forum_s3_to_synapse_migration.yaml',
-        'questions/curated/forum_s3_direct_access_setup.yaml'
+        'questions/curated/forum_s3_direct_access_setup.yaml',
+        'questions/curated/forum_permissions_mapping.yaml'
     ];
 
     const loadPromises = questionFiles.map(async (file) => {
